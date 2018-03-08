@@ -1,0 +1,36 @@
+{
+  "name": "interflora/interflora-ipos-order",
+  "type": "library",
+  "description": "IPOS Order structure",
+  "keywords": ["API"],
+  "homepage": "https://interflora.dk",
+  "authors": [
+    {
+      "name": "Jesper Bisgaard",
+      "email": "jesper@adapt.dk",
+      "homepage": "https://adaptagency.com",
+      "role": "Senior Solution Architect"
+    },
+    {
+      "name": "Rune Andersen",
+      "email": "rune@adapt.dk",
+      "homepage": "https://adaptagency.com",
+      "role": "Senior Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "doctrine/common": "~2.2"
+  },
+  "require-dev": {
+    "psr/container": "^1.0"
+  },
+  "autoload": {
+    "psr-0" : {
+      "Interflora_" : "lib/"
+    },
+    "psr-4" : {
+      "Interflora\\" : "src/"
+    }
+  }
+}
