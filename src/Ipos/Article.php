@@ -170,7 +170,7 @@ class Article
      *
      * @Groups({"article_get", "article_set", "get", "set"})
      */
-    protected $subArticles;
+    protected $subArticles = [];
 
     /**
      * @return int
