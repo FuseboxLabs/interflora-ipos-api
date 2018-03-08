@@ -40,7 +40,7 @@ class Price
      *
      * @Groups({"price_get", "price_set"})
      */
-    protected $number;
+    protected $number = 0.00;
 
     /**
      * @var string
