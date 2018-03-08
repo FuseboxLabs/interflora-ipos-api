@@ -1,6 +1,6 @@
 <?php
 
-namespace Interflora\ipos\Entity;
+namespace Interflora\Ipos;
 
 /**
  * Class Customer

@@ -1,5 +1,5 @@
 <?php
-namespace Interflora\ipos\Entity;
+namespace Interflora\Ipos;
 
 use Doctrine\Common\Collections\ArrayCollection;
 /**
