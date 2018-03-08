@@ -63,6 +63,16 @@ class Article
     protected $artCode;
 
     /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="text")
+     *
+     * @Groups({"article_get", "article_set", "get", "set"})
+     */
+    protected $type;
+
+    /**
      * @var int
      *
      * @Gedmo\Versioned
@@ -152,6 +162,17 @@ class Article
     protected $vatRate;
 
     /**
+     * @var Article[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="article",
+     *                                                   cascade={"persist"},
+     *                                                   orphanRemoval=true)
+     *
+     * @Groups({"article_get", "article_set", "get", "set"})
+     */
+    protected $subArticles;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -209,6 +230,31 @@ class Article
         $this->artCode = $artCode;
 
         return $this;
+    }
+
+    /**
+     * Get the article type, e.g. product, bundle, etc.
+     *
+     * @return string
+     *   The string representation of the article type.
+     */
+    public function getType(): string
+    {
+      return $this->type;
+    }
+
+    /**
+     * Set the article type.
+     *
+     * @param string $type The string representation of the article type.
+     *
+     * @return Article
+     */
+    public function setType(string $type): Article
+    {
+      $this->type = $type;
+
+      return $this;
     }
 
     /**
@@ -369,6 +415,32 @@ class Article
         $this->vatRate = $vatRate;
 
         return $this;
+    }
+
+    /**
+     * Get a list of sub articles.
+     * This is relevant for bundle products,
+     * which are comprised of multiple other products.
+     *
+     * @return Article[]
+     */
+    public function getSubArticles()
+    {
+      return $this->subArticles;
+    }
+
+    /**
+     * Set the sub articles.
+     *
+     * @param Article[] $articles A collections of articles.
+     *
+     * @return Article
+     */
+    public function setSubArticles($articles): Article
+    {
+      $this->subArticles = $articles;
+
+      return $this;
     }
 
 }

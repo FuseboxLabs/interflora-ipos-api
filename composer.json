@@ -22,12 +22,9 @@
     "php": ">=7.1",
     "doctrine/common": "~2.2"
   },
-  "require-dev": {
-    "psr/container": "^1.0"
-  },
   "autoload": {
     "psr-4" : {
-      "Interflora\\Ipos\\" : "src/"
+      "Interflora\\Ipos\\" : "src/Ipos"
     }
   }
 }
