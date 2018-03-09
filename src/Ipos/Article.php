@@ -173,6 +173,16 @@ class Article
     protected $subArticles = [];
 
     /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="json")
+     *
+     * @Groups({"payment_get", "payment_set"})
+     */
+    protected $data;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -439,6 +449,26 @@ class Article
     public function setSubArticles($articles): Article
     {
       $this->subArticles = $articles;
+
+      return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getData(): string
+    {
+      return $this->data;
+    }
+
+    /**
+     * @param string $data
+     *
+     * @return Payment
+     */
+    public function setData(string $data): Payment
+    {
+      $this->data = $data;
 
       return $this;
     }

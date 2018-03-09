@@ -50,7 +50,7 @@ class Payment
      *
      * @Groups({"payment_get", "payment_set"})
      */
-    protected $recipient;
+    protected $transactionId;
 
     /**
      * @var Price
@@ -91,6 +91,16 @@ class Payment
      * )
      */
     protected $order;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="json")
+     *
+     * @Groups({"payment_get", "payment_set"})
+     */
+    protected $data;
 
     /**
      * @return int
@@ -135,9 +145,9 @@ class Payment
     /**
      * @return string
      */
-    public function getRecipient(): string
+    public function getTransaction(): string
     {
-        return $this->recipient;
+        return $this->transactionId;
     }
 
     /**
@@ -145,9 +155,9 @@ class Payment
      *
      * @return Payment
      */
-    public function setRecipient(string $recipient): Payment
+    public function setTransaction(string $transactionId): Payment
     {
-        $this->recipient = $recipient;
+        $this->transactionId = $transactionId;
 
         return $this;
     }
@@ -175,21 +185,41 @@ class Payment
     /**
      * @return Order
      */
-    public function getOrder(): Order
+    public function getOrder(): string
     {
         return $this->order;
     }
 
     /**
-     * @param Order $order
+     * @param string $data
      *
      * @return Payment
      */
-    public function setOrder(Order $order): Payment
+    public function setOrder(string $data): Payment
     {
-        $this->order = $order;
+        $this->data = $data;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getData(): string
+    {
+      return $this->data;
+    }
+
+    /**
+     * @param string $data
+     *
+     * @return Payment
+     */
+    public function setData(string $data): Payment
+    {
+      $this->data = $data;
+
+      return $this;
     }
 
 }
