@@ -191,13 +191,13 @@ class Payment
     }
 
     /**
-     * @param string $data
+     * @param Order $order
      *
      * @return Payment
      */
-    public function setOrder(string $data): Payment
+    public function setOrder(Order $order): Payment
     {
-        $this->data = $data;
+        $this->order = $order;
 
         return $this;
     }
