@@ -464,9 +464,9 @@ class Article
     /**
      * @param string $data
      *
-     * @return Payment
+     * @return Article
      */
-    public function setData(string $data): Payment
+    public function setData(string $data): Article
     {
       $this->data = $data;
 
