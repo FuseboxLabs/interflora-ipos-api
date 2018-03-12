@@ -549,7 +549,7 @@ class Order
     }
 
     /**
-     * @param int $id
+     * @param string $orderId
      *
      * @return Order
      */
