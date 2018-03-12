@@ -140,6 +140,16 @@ class Order
      * @var string
      *
      * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=30)
+     *
+     * @Groups({"order_get", "order_set"})
+     */
+    protected $orderId;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Versioned
      * @ORM\Column(type="string", length=20)
      *
      * @Groups({"order_get", "order_set"})
@@ -528,6 +538,26 @@ class Order
         $this->id = $id;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderId(): string
+    {
+      return $this->orderId;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Order
+     */
+    public function setOrderId(string $id): Order
+    {
+      $this->orderId = $id;
+
+      return $this;
     }
 
     /**
