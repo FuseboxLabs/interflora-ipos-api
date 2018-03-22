@@ -364,6 +364,16 @@ class Order
     protected $executingMember;
 
     /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=50, nullable=true)
+     *
+     * @Groups({"get", "set"})
+     */
+    protected $currency;
+
+    /**
      * @var Recipient
      *
      * @Gedmo\Versioned
@@ -957,6 +967,27 @@ class Order
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getCurrency(): string
+    {
+      return $this->currency;
+    }
+
+    /**
+     * @param string $currency
+     *
+     * @return Order
+     */
+    public function setCurrency(string $currency): Order
+    {
+      $this->currency = $currency;
+
+      return $this;
+    }
+
 
     /**
      * @return string
