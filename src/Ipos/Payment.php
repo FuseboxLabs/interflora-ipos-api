@@ -53,22 +53,12 @@ class Payment
     protected $transactionId;
 
     /**
-     * @var Price
+     * @var float
      *
      * @Gedmo\Versioned
-     * @ORM\OneToOne(targetEntity="App\Entity\Price", cascade={"persist"}, orphanRemoval=true)
-     * @JoinColumn(name="price", referencedColumnName="id")
+     * @ORM\Column(type="float", precision=2)
      *
-     *
-     * @Groups({"payment_get", "payment_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Price",
-     *             "example"="/api/prices/1"
-     *         }
-     *     }
-     * )
+     * @Groups({"payment_get", "payment_set", "get", "set"})
      */
     protected $price;
 
@@ -163,19 +153,19 @@ class Payment
     }
 
     /**
-     * @return Price
+     * @return float
      */
-    public function getPrice(): Price
+    public function getPrice(): float
     {
         return $this->price;
     }
 
     /**
-     * @param Price $price
+     * @param float $price
      *
      * @return Payment
      */
-    public function setPrice(Price $price): Payment
+    public function setPrice($price): Payment
     {
         $this->price = $price;
 

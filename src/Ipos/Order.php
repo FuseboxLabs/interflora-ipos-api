@@ -304,104 +304,54 @@ class Order
     protected $confirmMail = false;
 
     /**
-     * @var Price
+     * @var float
      *
      * @Gedmo\Versioned
-     * @ORM\OneToOne(targetEntity="App\Entity\Price", cascade={"persist"},
-     *                                                orphanRemoval=true)
-     * @JoinColumn(name="order_total", referencedColumnName="id")
+     * @ORM\Column(type="float", precision=2)
      *
-     * @Groups({"order_get", "order_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Price",
-     *             "example"="/api/prices/1"
-     *         }
-     *     }
-     * )
+     * @Groups({"get", "set"})
      */
-    protected $orderTotal;
+    protected $orderTotal = 0.00;
 
     /**
-     * @var Price
+     * @var float
      *
      * @Gedmo\Versioned
-     * @ORM\OneToOne(targetEntity="App\Entity\Price", cascade={"persist"},
-     *                                                orphanRemoval=true)
-     * @JoinColumn(name="flower_total", referencedColumnName="id")
+     * @ORM\Column(type="float", precision=2)
      *
-     * @Groups({"order_get", "order_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Price",
-     *             "example"="/api/prices/1"
-     *         }
-     *     }
-     * )
+     * @Groups({"get", "set"})
      */
-    protected $flowerTotal;
+    protected $flowerTotal = 0.00;
 
     /**
-     * @var Price
+     * @var float
      *
      * @Gedmo\Versioned
-     * @ORM\OneToOne(targetEntity="App\Entity\Price", cascade={"persist"},
-     *                                                orphanRemoval=true)
-     * @JoinColumn(name="net_amount_total", referencedColumnName="id")
+     * @ORM\Column(type="float", precision=2)
      *
-     * @Groups({"order_get", "order_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Price",
-     *             "example"="/api/prices/1"
-     *         }
-     *     }
-     * )
+     * @Groups({"get", "set"})
      */
-    protected $netAmountTotal;
+    protected $netAmountTotal = 0.00;
 
     /**
-     * @var Price
+     * @var float
      *
      * @Gedmo\Versioned
-     * @ORM\OneToOne(targetEntity="App\Entity\Price", cascade={"persist"},
-     *                                                orphanRemoval=true)
-     * @JoinColumn(name="service_cost", referencedColumnName="id")
+     * @ORM\Column(type="float", precision=2)
      *
-     * @Groups({"order_get", "order_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Price",
-     *             "example"="/api/prices/1"
-     *         }
-     *     }
-     * )
+     * @Groups({"get", "set"})
      */
-    protected $serviceCost;
+    protected $serviceCost = 0.00;
 
     /**
-     * @var Price
+     * @var float
      *
      * @Gedmo\Versioned
-     * @ORM\OneToOne(targetEntity="App\Entity\Price", cascade={"persist"},
-     *                                                orphanRemoval=true)
-     * @JoinColumn(name="executing_member_cost", referencedColumnName="id")
+     * @ORM\Column(type="float", precision=2)
      *
-     * @Groups({"order_get", "order_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Price",
-     *             "example"="/api/prices/1"
-     *         }
-     *     }
-     * )
+     * @Groups({"get", "set"})
      */
-    protected $executingMemberCost;
+    protected $executingMemberCost = 0.00;
 
     /**
      * @var string
@@ -909,19 +859,19 @@ class Order
     }
 
     /**
-     * @return Price
+     * @return float
      */
-    public function getOrderTotal(): ? Price
+    public function getOrderTotal(): ? float
     {
         return $this->orderTotal;
     }
 
     /**
-     * @param Price $orderTotal
+     * @param float $orderTotal
      *
      * @return Order
      */
-    public function setOrderTotal(Price $orderTotal): Order
+    public function setOrderTotal($orderTotal): Order
     {
         $this->orderTotal = $orderTotal;
 
@@ -929,19 +879,19 @@ class Order
     }
 
     /**
-     * @return Price
+     * @return float
      */
-    public function getFlowerTotal(): ? Price
+    public function getFlowerTotal(): ? float
     {
         return $this->flowerTotal;
     }
 
     /**
-     * @param Price $flowerTotal
+     * @param float $flowerTotal
      *
      * @return Order
      */
-    public function setFlowerTotal(Price $flowerTotal): Order
+    public function setFlowerTotal($flowerTotal): Order
     {
         $this->flowerTotal = $flowerTotal;
 
@@ -949,19 +899,19 @@ class Order
     }
 
     /**
-     * @return Price
+     * @return float
      */
-    public function getNetAmountTotal(): ? Price
+    public function getNetAmountTotal(): ? float
     {
         return $this->netAmountTotal;
     }
 
     /**
-     * @param Price $netAmountTotal
+     * @param float $netAmountTotal
      *
      * @return Order
      */
-    public function setNetAmountTotal(Price $netAmountTotal): Order
+    public function setNetAmountTotal($netAmountTotal): Order
     {
         $this->netAmountTotal = $netAmountTotal;
 
@@ -969,19 +919,19 @@ class Order
     }
 
     /**
-     * @return Price
+     * @return float
      */
-    public function getServiceCost(): ? Price
+    public function getServiceCost(): ? float
     {
         return $this->serviceCost;
     }
 
     /**
-     * @param Price $serviceCost
+     * @param float $serviceCost
      *
      * @return Order
      */
-    public function setServiceCost(Price $serviceCost): Order
+    public function setServiceCost($serviceCost): Order
     {
         $this->serviceCost = $serviceCost;
 
@@ -989,19 +939,19 @@ class Order
     }
 
     /**
-     * @return Price
+     * @return float
      */
-    public function getExecutingMemberCost(): ? Price
+    public function getExecutingMemberCost(): ? float
     {
         return $this->executingMemberCost;
     }
 
     /**
-     * @param Price $executingMemberCost
+     * @param float $executingMemberCost
      *
      * @return Order
      */
-    public function setExecutingMemberCost(Price $executingMemberCost): Order
+    public function setExecutingMemberCost($executingMemberCost): Order
     {
         $this->executingMemberCost = $executingMemberCost;
 

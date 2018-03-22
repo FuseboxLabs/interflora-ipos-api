@@ -83,21 +83,12 @@ class Article
     protected $quantity;
 
     /**
-     * @var Price
+     * @var float
      *
      * @Gedmo\Versioned
-     * @ORM\OneToOne(targetEntity="App\Entity\Price", cascade={"persist"}, orphanRemoval=true)
-     * @JoinColumn(name="price", referencedColumnName="id")
+     * @ORM\Column(type="float", precision=2)
      *
-     * @Groups({"article_get", "article_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Price",
-     *             "example"="/api/prices/1"
-     *         }
-     *     }
-     * )
+     * @Groups({"article_get", "article_set", "get", "set"})
      */
     protected $price;
 
@@ -288,19 +279,19 @@ class Article
     }
 
     /**
-     * @return Price
+     * @return float
      */
-    public function getPrice(): Price
+    public function getPrice(): float
     {
         return $this->price;
     }
 
     /**
-     * @param Price $price
+     * @param float $price
      *
      * @return Article
      */
-    public function setPrice(Price $price): Article
+    public function setPrice($price): Article
     {
         $this->price = $price;
 
