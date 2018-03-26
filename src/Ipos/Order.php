@@ -767,7 +767,7 @@ class Order
      *
      * @return Order
      */
-    public function setFuneralTime(\DateTime $funeralTime): Order
+    public function setFuneralTime($funeralTime): Order
     {
         if (!$funeralTime instanceof \DateTime) {
             $funeralTime = new \DateTime($funeralTime);
