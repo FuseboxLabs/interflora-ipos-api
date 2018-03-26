@@ -272,7 +272,7 @@ class Order
      *
      * @Groups({"order_get", "order_set"})
      */
-    protected $orderRemarks;
+    protected $orderRemarks = '';
 
     /**
      * @var \DateTime
