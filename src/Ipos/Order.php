@@ -724,7 +724,7 @@ class Order
     /**
      * @return \DateTime
      */
-    public function getFuneralTime(): \DateTime
+    public function getFuneralTime(): ? \DateTime
     {
         return $this->funeralTime;
     }
@@ -736,6 +736,9 @@ class Order
      */
     public function setFuneralTime(\DateTime $funeralTime): Order
     {
+        if (!$funeralTime instanceof \DateTime) {
+            $funeralTime = new \DateTime($funeralTime);
+        }
         $this->funeralTime = $funeralTime;
 
         return $this;
