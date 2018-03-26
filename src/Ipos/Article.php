@@ -347,11 +347,11 @@ class Article
     }
 
     /**
-     * @param int $productGroup
+     * @param string $productGroup
      *
      * @return Article
      */
-    public function setProductGroup(int $productGroup): Article
+    public function setProductGroup(string $productGroup): Article
     {
         $this->productGroup = $productGroup;
 
