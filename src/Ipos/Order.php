@@ -491,6 +491,39 @@ class Order
      */
     protected $createdAt;
 
+
+
+    /**
+     * @var Note[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\Note",
+     *     mappedBy="order",
+     *     cascade={"persist"},
+     *     orphanRemoval=true
+     * )
+     * @Groups({"get"})
+     * @ApiSubresource
+     */
+    protected $notes;
+
+    /**
+     * @var string[]|ArrayCollection
+
+     * @Groups({"get", "set"})
+     */
+    protected $ribbons;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=20)
+     *
+     * @Groups({"get", "set"})
+     */
+    protected $ipAddress = '';
+
     /**
      * Order constructor.
      */
@@ -1181,6 +1214,64 @@ class Order
         return $this;
     }
 
+    /**
+     * @return Note[]|ArrayCollection
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
 
+    /**
+     * @param Note[]|ArrayCollection $notes
+     *
+     * @return Order
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * @return string[]|ArrayCollection
+     */
+    public function getRibbons()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * @param string[]|ArrayCollection $ribbons
+     *
+     * @return Order
+     */
+    public function setRibbons($ribbons)
+    {
+        $this->ribbons = $ribbons;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIpAddress(): ? string
+    {
+        return $this->ipAddress;
+    }
+
+    /**
+     * @param string $executingMember
+     *
+     * @return Order
+     */
+    public function setIpAddress(string $ipAddress): Order
+    {
+        $this->ipAddress = $ipAddress;
+
+        return $this;
+    }
 
 }

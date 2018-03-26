@@ -98,6 +98,16 @@ class Recipient
      * @Gedmo\Versioned
      * @ORM\Column(type="string", length=50)
      *
+     * @Groups({"recipient_get", "recipient_set", "get", "set"})
+     */
+    protected $church = '';
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=50)
+     *
      * @Groups({"recipient_get", "recipient_set"})
      */
     protected $phone;
@@ -249,6 +259,26 @@ class Recipient
     public function setCity(string $city): Recipient
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getChurch(): string
+    {
+        return $this->church;
+    }
+
+    /**
+     * @param string $church
+     *
+     * @return Recipient
+     */
+    public function setChurch(string $church): Recipient
+    {
+        $this->church = $church;
 
         return $this;
     }
