@@ -214,6 +214,27 @@ class Order
      */
     protected $deliveryDate;
 
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="datetime")
+     *
+     * @Groups({"get", "set"})
+     */
+    protected $funeralTime;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=100)
+     *
+     * @Groups({"get", "set"})
+     */
+    protected $deliveryInterval = '';
+
     /**
      * @var ExternalReference[]|ArrayCollection
      *
@@ -696,6 +717,46 @@ class Order
             $deliveryDate = new \DateTime($deliveryDate);
         }
         $this->deliveryDate = $deliveryDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getFuneralTime(): \DateTime
+    {
+        return $this->funeralTime;
+    }
+
+    /**
+     * @param \DateTime $funeralTime
+     *
+     * @return Order
+     */
+    public function setFuneralTime(\DateTime $funeralTime): Order
+    {
+        $this->funeralTime = $funeralTime;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeliveryInterval(): string
+    {
+        return $this->deliveryInterval;
+    }
+
+    /**
+     * @param string $deliveryInterval
+     *
+     * @return Order
+     */
+    public function setDeliveryInterval(string $deliveryInterval): Order
+    {
+        $this->deliveryInterval = $deliveryInterval;
 
         return $this;
     }
