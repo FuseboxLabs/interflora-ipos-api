@@ -121,7 +121,7 @@ class Customer
      *
      * @Groups({"customer_get", "customer_set", "get", "set"})
      */
-    protected $type;
+    protected $type = 'b2c';
 
     /**
      * @var Debitor
