@@ -60,7 +60,7 @@ class Recipient
      *
      * @Groups({"recipient_get", "recipient_set"})
      */
-    protected $name2;
+    protected $street;
 
     /**
      * @var string
@@ -70,9 +70,9 @@ class Recipient
      *
      * @Groups({"recipient_get", "recipient_set"})
      */
-    protected $street;
+    protected $street2;
 
-    /**
+  /**
      * @var string
      *
      * @Gedmo\Versioned
@@ -186,19 +186,19 @@ class Recipient
     /**
      * @return string
      */
-    public function getName2(): string
+    public function getStreet2(): string
     {
-        return $this->name2;
+        return $this->street2;
     }
 
     /**
-     * @param string $name2
+     * @param string $street2
      *
      * @return Recipient
      */
-    public function setName2(string $name2): Recipient
+    public function setStreet2(string $street2): Recipient
     {
-        $this->name2 = $name2;
+        $this->street2 = $street2;
 
         return $this;
     }

@@ -93,56 +93,116 @@ class Order
      */
     public const ORDER_STATUS_SENT = 'SENT';
 
-
     /**
      * National orders statuses
      */
     public const NATIONAL_ORDER_STATUSES = [
-      self::ORDER_STATUS_NEW,
-      self::ORDER_STATUS_NOT_PRINTED,
-      self::ORDER_STATUS_PRINTED,
-      self::ORDER_STATUS_DELIVERED,
-      self::ORDER_STATUS_CANCELED,
-      self::ORDER_STATUS_COMPLETED,
+        self::ORDER_STATUS_NEW,
+        self::ORDER_STATUS_NOT_PRINTED,
+        self::ORDER_STATUS_PRINTED,
+        self::ORDER_STATUS_DELIVERED,
+        self::ORDER_STATUS_CANCELED,
+        self::ORDER_STATUS_COMPLETED,
     ];
 
     /**
      * International order statuses
      */
     public const INTERNATIONAL_ORDER_STATUSES = [
-      self::ORDER_STATUS_NEW,
-      self::ORDER_STATUS_PENDING_APPROVAL,
-      self::ORDER_STATUS_OUTGOING,
-      self::ORDER_STATUS_SENT,
-      self::ORDER_STATUS_COMPLETED,
+        self::ORDER_STATUS_NEW,
+        self::ORDER_STATUS_PENDING_APPROVAL,
+        self::ORDER_STATUS_OUTGOING,
+        self::ORDER_STATUS_SENT,
+        self::ORDER_STATUS_COMPLETED,
     ];
+
+    /**
+     * Statuses of order that is considered as not delivered
+     */
+    public const ORDER_STATUSES_NOT_DELIVERED = [
+        self::ORDER_STATUS_NEW,
+        self::ORDER_STATUS_NOT_PRINTED,
+        self::ORDER_STATUS_PRINTED,
+    ];
+
+
+    /**
+     * Statuses of order that is considered as delivered
+     */
+    public const ORDER_STATUSES_DELIVERED = [
+        self::ORDER_STATUS_DELIVERED,
+        self::ORDER_STATUS_COMPLETED,
+    ];
+
+    /**
+     * All order statuses
+     */
+    public const ORDER_STATUSES = self::INTERNATIONAL_ORDER_STATUSES + self::NATIONAL_ORDER_STATUSES;
 
     /**
      * Order types
      */
     public const ORDER_TYPES = [
-      self::ORDER_TYPE_NATIONAL,
-      self::ORDER_TYPE_INTERNATIONAL,
+        self::ORDER_TYPE_NATIONAL,
+        self::ORDER_TYPE_INTERNATIONAL,
+    ];
+
+    /**
+     * Order prefix map to source
+     */
+    public const ORDER_PREFIX_MAP = [
+        55 => 'interflora.dk',
+        11 => 'posy',
+    ];
+
+    /**
+     * Pattern to take prefix from order number, i.e. prefix 55 will be taken from 55-131-2131-321
+     */
+    public const ORDER_NUMBER_PREFIX_PATTERN = '/^(.+?)-/';
+
+    /**
+     * Order category standard
+     */
+    public const ORDER_CATEGORY_STANDARD = 'standard';
+
+    /**
+     * Order category funeral
+     */
+    public const ORDER_CATEGORY_FUNERAL = 'funeral';
+
+    /**
+     * Order category funeral
+     */
+    public const ORDER_CATEGORY_GIFT_CARD = 'gift_card';
+
+    /**
+     * Order categories
+     */
+    public const ORDER_CATEGORIES = [
+        self::ORDER_CATEGORY_STANDARD,
+        self::ORDER_CATEGORY_FUNERAL,
+        self::ORDER_CATEGORY_GIFT_CARD,
     ];
 
     /**
      * @var string
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="string")
-     *
-     * @Groups({"order_get"})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer")
+     * @Groups({"get"})
      */
     protected $id;
 
     /**
+     * Order id from external systems.
+     *
      * @var string
      *
      * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=50)
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $orderId;
 
@@ -150,15 +210,25 @@ class Order
      * @var string
      *
      * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=50)
+     *
+     * @Groups({"get"})
+     */
+    protected $sourceInformation;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Versioned
      * @ORM\Column(type="string", length=20)
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      * @ApiProperty(
      *     attributes={
      *         "swagger_context"={
      *             "type"="string",
-     *             "enum"={"NAT", "INT"},
-     *             "example"="NAT"
+     *             "enum"={Order::ORDER_TYPES},
+     *             "example"=Order::ORDER_TYPE_NATIONAL
      *         }
      *     }
      * )
@@ -171,13 +241,32 @@ class Order
      * @Gedmo\Versioned
      * @ORM\Column(type="string", length=20)
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      * @ApiProperty(
      *     attributes={
      *         "swagger_context"={
      *             "type"="string",
-     *             "enum"={"NEW", "PRINTED", "DELIVERED"},
-     *             "example"="NEW"
+     *             "enum"={Order::ORDER_CATEGORIES},
+     *             "example"=Order::ORDER_CATEGORY_STANDARD
+     *         }
+     *     }
+     * )
+     */
+    protected $category = self::ORDER_CATEGORY_STANDARD;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=20)
+     *
+     * @Groups({"get", "set"})
+     * @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *             "type"="string",
+     *             "enum"={Order::ORDER_STATUSES},
+     *             "example"=Order::ORDER_STATUS_NEW
      *         }
      *     }
      * )
@@ -185,12 +274,19 @@ class Order
     protected $status = self::ORDER_STATUS_NEW;
 
     /**
+     * @var bool
+     *
+     * @Groups({"get"})
+     */
+    protected $isDelivered;
+
+    /**
      * @var string
      *
      * @Gedmo\Versioned
      * @ORM\Column(type="string", length=50)
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $fromCountry;
 
@@ -200,7 +296,7 @@ class Order
      * @Gedmo\Versioned
      * @ORM\Column(type="string", length=50)
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $toCountry;
 
@@ -210,10 +306,9 @@ class Order
      * @Gedmo\Versioned
      * @ORM\Column(type="datetime")
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $deliveryDate;
-
 
     /**
      * @var \DateTime
@@ -238,19 +333,10 @@ class Order
     /**
      * @var ExternalReference[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\ExternalReference", mappedBy="order",
-     *                                                             cascade={"persist"},
+     * @ORM\OneToMany(targetEntity="App\Entity\ExternalReference", mappedBy="order", cascade={"persist"},
      *                                                             orphanRemoval=true)
      *
-     * @Groups({"order_get", "order_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="ExternalReference[]",
-     *             "example"="/api/external_references/1"
-     *         }
-     *     }
-     * )
+     * @Groups({"get", "set"})
      */
     protected $externalReferences;
 
@@ -260,7 +346,7 @@ class Order
      * @Gedmo\Versioned
      * @ORM\Column(type="string", length=50)
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $sendingMember;
 
@@ -270,7 +356,7 @@ class Order
      * @Gedmo\Versioned
      * @ORM\Column(type="string", length=50)
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $orderRemarks = '';
 
@@ -280,7 +366,7 @@ class Order
      * @Gedmo\Versioned
      * @ORM\Column(type="datetime")
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $orderDate;
 
@@ -290,7 +376,7 @@ class Order
      * @Gedmo\Versioned
      * @ORM\Column(type="boolean")
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $leaveAtDoor = false;
 
@@ -300,7 +386,7 @@ class Order
      * @Gedmo\Versioned
      * @ORM\Column(type="boolean")
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $leaveAtNeighbour = false;
 
@@ -310,7 +396,7 @@ class Order
      * @Gedmo\Versioned
      * @ORM\Column(type="boolean")
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $confirmSMS = false;
 
@@ -320,7 +406,7 @@ class Order
      * @Gedmo\Versioned
      * @ORM\Column(type="boolean")
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
     protected $confirmMail = false;
 
@@ -332,7 +418,7 @@ class Order
      *
      * @Groups({"get", "set"})
      */
-    protected $orderTotal = 0.00;
+    protected $orderTotal;
 
     /**
      * @var float
@@ -342,7 +428,7 @@ class Order
      *
      * @Groups({"get", "set"})
      */
-    protected $flowerTotal = 0.00;
+    protected $flowerTotal;
 
     /**
      * @var float
@@ -352,7 +438,7 @@ class Order
      *
      * @Groups({"get", "set"})
      */
-    protected $netAmountTotal = 0.00;
+    protected $netAmountTotal;
 
     /**
      * @var float
@@ -362,7 +448,7 @@ class Order
      *
      * @Groups({"get", "set"})
      */
-    protected $serviceCost = 0.00;
+    protected $serviceCost;
 
     /**
      * @var float
@@ -372,17 +458,7 @@ class Order
      *
      * @Groups({"get", "set"})
      */
-    protected $executingMemberCost = 0.00;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"order_get", "order_set"})
-     */
-    protected $executingMember;
+    protected $executingMemberCost;
 
     /**
      * @var string
@@ -395,22 +471,30 @@ class Order
     protected $currency;
 
     /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=50, nullable=false)
+     *
+     * @Groups({"get", "set"})
+     */
+    protected $executingMember;
+
+    /**
      * @var Recipient
      *
      * @Gedmo\Versioned
-     * @ORM\OneToOne(targetEntity="App\Entity\Recipient", cascade={"persist"},
-     *                                                    orphanRemoval=true)
-     * @JoinColumn(name="recipient", referencedColumnName="id")
-     *
-     * @Groups({"order_get", "order_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Recipient",
-     *             "example"="/api/recipients/1"
-     *         }
-     *     }
+     * @ORM\OneToOne(
+     *     targetEntity="App\Entity\Recipient",
+     *     cascade={"persist"},
+     *     orphanRemoval=true
      * )
+     * @JoinColumn(
+     *     name="recipient",
+     *     referencedColumnName="id"
+     * )
+     *
+     * @Groups({"get", "set"})
      */
     protected $recipient;
 
@@ -418,57 +502,45 @@ class Order
      * @var Customer
      *
      * @Gedmo\Versioned
-     * @ORM\OneToOne(targetEntity="App\Entity\Customer", cascade={"persist"},
-     *                                                   orphanRemoval=true)
-     * @JoinColumn(name="customer", referencedColumnName="id")
-     *
-     * @Groups({"order_get", "order_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Customer",
-     *             "example"="/api/customers/1"
-     *         }
-     *     }
+     * @ORM\OneToOne(
+     *     targetEntity="App\Entity\Customer",
+     *     cascade={"persist"},
+     *     orphanRemoval=true
      * )
+     * @JoinColumn(
+     *     name="customer",
+     *     referencedColumnName="id"
+     * )
+     *
+     * @Groups({"get", "set"})
      */
     protected $customer;
 
     /**
      * @var Article[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="order",
-     *                                                   cascade={"persist"},
-     *                                                   orphanRemoval=true)
-     *
-     * @Groups({"order_get", "order_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Article[]",
-     *             "example"="/api/articles/1"
-     *         }
-     *     }
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\Article",
+     *     mappedBy="order",
+     *     cascade={"persist"},
+     *     orphanRemoval=true
      * )
+     *
+     * @Groups({"get", "set"})
      */
     protected $articles;
 
     /**
      * @var Payment[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="order",
-     *                                                   cascade={"persist"},
-     *                                                   orphanRemoval=true)
-     *
-     * @Groups({"order_get", "order_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Payment[]",
-     *             "example"="/api/payments/1"
-     *         }
-     *     }
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\Payment",
+     *     mappedBy="order",
+     *     cascade={"persist"},
+     *     orphanRemoval=true
      * )
+     *
+     * @Groups({"get", "set"})
      */
     protected $payments;
 
@@ -476,22 +548,21 @@ class Order
      * @var string
      *
      * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=50)
      *
-     * @Groups({"order_get", "order_set"})
+     * @Groups({"get", "set"})
      */
-    protected $print;
+    protected $print = '';
 
     /**
      * @var \DateTime
+     *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      *
-     * @Groups({"order_get"})
+     * @Groups({"get"})
      */
     protected $createdAt;
-
-
 
     /**
      * @var Note[]|ArrayCollection
@@ -525,13 +596,23 @@ class Order
     protected $ipAddress = '';
 
     /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="json")
+     *
+     * @Groups({"article_get", "article_set"})
+     */
+    protected $data = '';
+
+    /**
      * Order constructor.
      */
     public function __construct()
     {
-        $this->externalReferences =  new ArrayCollection();
-        $this->payments = new ArrayCollection();
-        $this->articles = new ArrayCollection();
+        $this->externalReferences = [];
+        $this->payments = [];
+        $this->articles = [];
     }
 
     /**
@@ -559,7 +640,7 @@ class Order
      */
     public function getOrderId(): string
     {
-      return $this->orderId;
+        return $this->orderId;
     }
 
     /**
@@ -567,11 +648,37 @@ class Order
      *
      * @return Order
      */
-    public function setOrderId(string $id): Order
+    public function setOrderId(string $orderId): Order
     {
-      $this->orderId = $id;
+        $this->orderId = $orderId;
 
-      return $this;
+        $this->setSourceInformation();
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceInformation(): string
+    {
+        return $this->sourceInformation;
+    }
+
+    /**
+     * @return Order
+     */
+    protected function setSourceInformation(): Order
+    {
+        $this->sourceInformation = '';
+        preg_match(self::ORDER_NUMBER_PREFIX_PATTERN, $this->getOrderId(), $sourceInformation);
+        if (isset($sourceInformation[1])) {
+            $prefix = $sourceInformation[1];
+            if (array_key_exists($prefix, self::ORDER_PREFIX_MAP)) {
+                $this->sourceInformation = self::ORDER_PREFIX_MAP[$prefix];
+            }
+        }
+        return $this;
     }
 
     /**
@@ -589,9 +696,14 @@ class Order
      */
     public function setOrderType(string $orderType): Order
     {
-
         if (!\in_array($orderType, self::ORDER_TYPES, true)) {
-            throw new \InvalidArgumentException("Invalid order type");
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Invalid order type provided: %s. Available types: %s',
+                    $orderType,
+                    implode(', ', self::ORDER_TYPES)
+                )
+            );
         }
 
         $this->orderType = $orderType;
@@ -634,6 +746,36 @@ class Order
     /**
      * @return string
      */
+    public function getCategory(): string
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param string $category
+     *
+     * @return Order
+     */
+    public function setCategory(string $category): Order
+    {
+        if (!\in_array($category, self::ORDER_CATEGORIES, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Invalid order category provided: %s. Available categories: %s',
+                    $category,
+                    implode(', ', self::ORDER_CATEGORIES)
+                )
+            );
+        }
+
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getStatus(): ? string
     {
         return $this->status;
@@ -646,13 +788,32 @@ class Order
      */
     public function setStatus(string $status): Order
     {
-        if ($this->isValidNationalStatus($status) || $this->isValidInternationalStatus($status)) {
+        if ($this->isValidStatus($status)) {
             $this->status = $status;
 
             return $this;
         }
 
-        throw new \InvalidArgumentException('Invalid status');
+        $availableStatuses = $this->isNationalOrder() ? self::NATIONAL_ORDER_STATUSES : self::INTERNATIONAL_ORDER_STATUSES;
+
+        throw new \InvalidArgumentException(
+            sprintf(
+                'Invalid order status provided: %s. Available statuses for order type %s: %s',
+                $status,
+                $this->getOrderType(),
+                implode(', ', $availableStatuses)
+            )
+        );
+    }
+
+    /**
+     * @param string $status
+     *
+     * @return bool
+     */
+    public function isValidStatus($status): bool
+    {
+        return $this->isValidNationalStatus($status) || $this->isValidInternationalStatus($status);
     }
 
     /**
@@ -673,6 +834,14 @@ class Order
     public function isValidInternationalStatus($status): bool
     {
         return $this->isInternationalOrder() && \in_array($status, self::INTERNATIONAL_ORDER_STATUSES, true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDelivered():? bool
+    {
+        return $this->isDelivered;
     }
 
     /**
@@ -734,7 +903,7 @@ class Order
     /**
      * @return \DateTime
      */
-    public function getDeliveryDate(): ? \DateTime
+    public function getDeliveryDate(): \DateTime
     {
         return $this->deliveryDate;
     }
@@ -746,9 +915,6 @@ class Order
      */
     public function setDeliveryDate($deliveryDate): Order
     {
-        if (!$deliveryDate instanceof \DateTime) {
-            $deliveryDate = new \DateTime($deliveryDate);
-        }
         $this->deliveryDate = $deliveryDate;
 
         return $this;
@@ -757,7 +923,7 @@ class Order
     /**
      * @return \DateTime
      */
-    public function getFuneralTime(): ? \DateTime
+    public function getFuneralTime(): \DateTime
     {
         return $this->funeralTime;
     }
@@ -769,9 +935,6 @@ class Order
      */
     public function setFuneralTime($funeralTime): Order
     {
-        if (!$funeralTime instanceof \DateTime) {
-            $funeralTime = new \DateTime($funeralTime);
-        }
         $this->funeralTime = $funeralTime;
 
         return $this;
@@ -968,7 +1131,7 @@ class Order
     /**
      * @return float
      */
-    public function getOrderTotal(): ? float
+    public function getOrderTotal(): float
     {
         return $this->orderTotal;
     }
@@ -978,7 +1141,7 @@ class Order
      *
      * @return Order
      */
-    public function setOrderTotal($orderTotal): Order
+    public function setOrderTotal(float $orderTotal): Order
     {
         $this->orderTotal = $orderTotal;
 
@@ -988,7 +1151,7 @@ class Order
     /**
      * @return float
      */
-    public function getFlowerTotal(): ? float
+    public function getFlowerTotal(): float
     {
         return $this->flowerTotal;
     }
@@ -998,7 +1161,7 @@ class Order
      *
      * @return Order
      */
-    public function setFlowerTotal($flowerTotal): Order
+    public function setFlowerTotal(float $flowerTotal): Order
     {
         $this->flowerTotal = $flowerTotal;
 
@@ -1008,7 +1171,7 @@ class Order
     /**
      * @return float
      */
-    public function getNetAmountTotal(): ? float
+    public function getNetAmountTotal(): float
     {
         return $this->netAmountTotal;
     }
@@ -1018,7 +1181,7 @@ class Order
      *
      * @return Order
      */
-    public function setNetAmountTotal($netAmountTotal): Order
+    public function setNetAmountTotal(float $netAmountTotal): Order
     {
         $this->netAmountTotal = $netAmountTotal;
 
@@ -1028,7 +1191,7 @@ class Order
     /**
      * @return float
      */
-    public function getServiceCost(): ? float
+    public function getServiceCost(): float
     {
         return $this->serviceCost;
     }
@@ -1038,7 +1201,7 @@ class Order
      *
      * @return Order
      */
-    public function setServiceCost($serviceCost): Order
+    public function setServiceCost(float $serviceCost): Order
     {
         $this->serviceCost = $serviceCost;
 
@@ -1048,7 +1211,7 @@ class Order
     /**
      * @return float
      */
-    public function getExecutingMemberCost(): ? float
+    public function getExecutingMemberCost(): float
     {
         return $this->executingMemberCost;
     }
@@ -1058,7 +1221,7 @@ class Order
      *
      * @return Order
      */
-    public function setExecutingMemberCost($executingMemberCost): Order
+    public function setExecutingMemberCost(float $executingMemberCost): Order
     {
         $this->executingMemberCost = $executingMemberCost;
 
@@ -1070,7 +1233,7 @@ class Order
      */
     public function getCurrency(): string
     {
-      return $this->currency;
+        return $this->currency;
     }
 
     /**
@@ -1080,11 +1243,10 @@ class Order
      */
     public function setCurrency(string $currency): Order
     {
-      $this->currency = $currency;
+        $this->currency = $currency;
 
-      return $this;
+        return $this;
     }
-
 
     /**
      * @return string
@@ -1263,13 +1425,33 @@ class Order
     }
 
     /**
-     * @param string $executingMember
+     * @param string $ipAddress
      *
      * @return Order
      */
     public function setIpAddress(string $ipAddress): Order
     {
         $this->ipAddress = $ipAddress;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getData(): string
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param string $data
+     *
+     * @return Order
+     */
+    public function setData(string $data): Order
+    {
+        $this->data = $data;
 
         return $this;
     }

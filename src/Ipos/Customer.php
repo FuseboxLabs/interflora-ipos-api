@@ -61,7 +61,7 @@ class Customer
      *
      * @Groups({"recipient_get", "recipient_set", "get", "set"})
      */
-    protected $name2 = '';
+    protected $street = '';
 
     /**
      * @var string
@@ -71,7 +71,7 @@ class Customer
      *
      * @Groups({"recipient_get", "recipient_set", "get", "set"})
      */
-    protected $street = '';
+    protected $street2 = '';
 
     /**
      * @var string
@@ -204,19 +204,19 @@ class Customer
     /**
      * @return string
      */
-    public function getName2(): string
+    public function getStreet2(): string
     {
-        return $this->name2;
+        return $this->street2;
     }
 
     /**
-     * @param string $name2
+     * @param string $street2
      *
      * @return Customer
      */
-    public function setName2(string $name2): Customer
+    public function setStreet2(string $street2): Customer
     {
-        $this->name2 = $name2;
+        $this->street2 = $street2;
 
         return $this;
     }
@@ -339,6 +339,26 @@ class Customer
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * @return Debitor
+     */
+    public function getDebitor(): Debitor
+    {
+      return $this->debitor;
+    }
+
+    /**
+     * @param string $debitor
+     *
+     * @return Customer
+     */
+    public function setDebitor(Debitor $debitor): Customer
+    {
+      $this->debitor = $debitor;
+
+      return $this;
     }
 
 }
