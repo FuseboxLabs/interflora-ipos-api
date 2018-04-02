@@ -35,6 +35,11 @@ class OrderStatus {
   public const COMPLETED = 'COMPLETED';
 
   /**
+   * Order status completed
+   */
+  public const NAVISION_ERROR = 'NAVISION_ERROR';
+
+  /**
    * International order status pending approval
    */
   public const PENDING_APPROVAL = 'PENDING_APPROVAL';
