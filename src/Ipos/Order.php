@@ -39,90 +39,35 @@ class Order
 {
 
     /**
-     * Order type national
-     */
-    public const ORDER_TYPE_NATIONAL = 'NAT';
-
-    /**
-     * Order type international
-     */
-    public const ORDER_TYPE_INTERNATIONAL = 'INT';
-
-    /**
-     * Order status new
-     */
-    public const ORDER_STATUS_NEW = 'NEW';
-
-    /**
-     * Order status printed
-     */
-    public const ORDER_STATUS_PRINTED = 'PRINTED';
-
-    /**
-     * Order status not printed
-     */
-    public const ORDER_STATUS_NOT_PRINTED = 'NOT_PRINTED';
-
-    /**
-     * Order status delivered
-     */
-    public const ORDER_STATUS_DELIVERED = 'DELIVERED';
-
-    /**
-     * Order status canceled
-     */
-    public const ORDER_STATUS_CANCELED = 'CANCELED';
-
-    /**
-     * Order status completed
-     */
-    public const ORDER_STATUS_COMPLETED = 'COMPLETED';
-
-    /**
-     * International order status pending approval
-     */
-    public const ORDER_STATUS_PENDING_APPROVAL = 'PENDING_APPROVAL';
-
-    /**
-     * International order status outgoing
-     */
-    public const ORDER_STATUS_OUTGOING = 'OUTGOING';
-
-    /**
-     * International order status sent to florist gate
-     */
-    public const ORDER_STATUS_SENT = 'SENT';
-
-    /**
      * National orders statuses
      */
     public const NATIONAL_ORDER_STATUSES = [
-        self::ORDER_STATUS_NEW,
-        self::ORDER_STATUS_NOT_PRINTED,
-        self::ORDER_STATUS_PRINTED,
-        self::ORDER_STATUS_DELIVERED,
-        self::ORDER_STATUS_CANCELED,
-        self::ORDER_STATUS_COMPLETED,
+        OrderStatus::ORDER_STATUS_NEW,
+        OrderStatus::ORDER_STATUS_NOT_PRINTED,
+        OrderStatus::ORDER_STATUS_PRINTED,
+        OrderStatus::ORDER_STATUS_DELIVERED,
+        OrderStatus::ORDER_STATUS_CANCELED,
+        OrderStatus::ORDER_STATUS_COMPLETED,
     ];
 
     /**
      * International order statuses
      */
     public const INTERNATIONAL_ORDER_STATUSES = [
-        self::ORDER_STATUS_NEW,
-        self::ORDER_STATUS_PENDING_APPROVAL,
-        self::ORDER_STATUS_OUTGOING,
-        self::ORDER_STATUS_SENT,
-        self::ORDER_STATUS_COMPLETED,
+        OrderStatus::ORDER_STATUS_NEW,
+        OrderStatus::ORDER_STATUS_PENDING_APPROVAL,
+        OrderStatus::ORDER_STATUS_OUTGOING,
+        OrderStatus::ORDER_STATUS_SENT,
+        OrderStatus::ORDER_STATUS_COMPLETED,
     ];
 
     /**
      * Statuses of order that is considered as not delivered
      */
     public const ORDER_STATUSES_NOT_DELIVERED = [
-        self::ORDER_STATUS_NEW,
-        self::ORDER_STATUS_NOT_PRINTED,
-        self::ORDER_STATUS_PRINTED,
+        OrderStatus::ORDER_STATUS_NEW,
+        OrderStatus::ORDER_STATUS_NOT_PRINTED,
+        OrderStatus::ORDER_STATUS_PRINTED,
     ];
 
 
@@ -130,8 +75,8 @@ class Order
      * Statuses of order that is considered as delivered
      */
     public const ORDER_STATUSES_DELIVERED = [
-        self::ORDER_STATUS_DELIVERED,
-        self::ORDER_STATUS_COMPLETED,
+        OrderStatus::ORDER_STATUS_DELIVERED,
+        OrderStatus::ORDER_STATUS_COMPLETED,
     ];
 
     /**
@@ -143,8 +88,8 @@ class Order
      * Order types
      */
     public const ORDER_TYPES = [
-        self::ORDER_TYPE_NATIONAL,
-        self::ORDER_TYPE_INTERNATIONAL,
+        OrderType::ORDER_TYPE_NATIONAL,
+        OrderType::ORDER_TYPE_INTERNATIONAL,
     ];
 
     /**
@@ -161,27 +106,12 @@ class Order
     public const ORDER_NUMBER_PREFIX_PATTERN = '/^(.+?)-/';
 
     /**
-     * Order category standard
-     */
-    public const ORDER_CATEGORY_STANDARD = 'standard';
-
-    /**
-     * Order category funeral
-     */
-    public const ORDER_CATEGORY_FUNERAL = 'funeral';
-
-    /**
-     * Order category funeral
-     */
-    public const ORDER_CATEGORY_GIFT_CARD = 'gift_card';
-
-    /**
      * Order categories
      */
     public const ORDER_CATEGORIES = [
-        self::ORDER_CATEGORY_STANDARD,
-        self::ORDER_CATEGORY_FUNERAL,
-        self::ORDER_CATEGORY_GIFT_CARD,
+        OrderCategory::ORDER_CATEGORY_STANDARD,
+        OrderCategory::ORDER_CATEGORY_FUNERAL,
+        OrderCategory::ORDER_CATEGORY_GIFT_CARD,
     ];
 
     /**
