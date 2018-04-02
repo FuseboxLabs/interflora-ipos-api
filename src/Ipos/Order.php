@@ -42,32 +42,32 @@ class Order
      * National orders statuses
      */
     public const NATIONAL_ORDER_STATUSES = [
-        OrderStatus::ORDER_STATUS_NEW,
-        OrderStatus::ORDER_STATUS_NOT_PRINTED,
-        OrderStatus::ORDER_STATUS_PRINTED,
-        OrderStatus::ORDER_STATUS_DELIVERED,
-        OrderStatus::ORDER_STATUS_CANCELED,
-        OrderStatus::ORDER_STATUS_COMPLETED,
+        OrderStatus::NEW,
+        OrderStatus::NOT_PRINTED,
+        OrderStatus::PRINTED,
+        OrderStatus::DELIVERED,
+        OrderStatus::CANCELED,
+        OrderStatus::COMPLETED,
     ];
 
     /**
      * International order statuses
      */
     public const INTERNATIONAL_ORDER_STATUSES = [
-        OrderStatus::ORDER_STATUS_NEW,
-        OrderStatus::ORDER_STATUS_PENDING_APPROVAL,
-        OrderStatus::ORDER_STATUS_OUTGOING,
-        OrderStatus::ORDER_STATUS_SENT,
-        OrderStatus::ORDER_STATUS_COMPLETED,
+        OrderStatus::NEW,
+        OrderStatus::PENDING_APPROVAL,
+        OrderStatus::OUTGOING,
+        OrderStatus::SENT,
+        OrderStatus::COMPLETED,
     ];
 
     /**
      * Statuses of order that is considered as not delivered
      */
     public const ORDER_STATUSES_NOT_DELIVERED = [
-        OrderStatus::ORDER_STATUS_NEW,
-        OrderStatus::ORDER_STATUS_NOT_PRINTED,
-        OrderStatus::ORDER_STATUS_PRINTED,
+        OrderStatus::NEW,
+        OrderStatus::NOT_PRINTED,
+        OrderStatus::PRINTED,
     ];
 
 
@@ -75,8 +75,8 @@ class Order
      * Statuses of order that is considered as delivered
      */
     public const ORDER_STATUSES_DELIVERED = [
-        OrderStatus::ORDER_STATUS_DELIVERED,
-        OrderStatus::ORDER_STATUS_COMPLETED,
+        OrderStatus::DELIVERED,
+        OrderStatus::COMPLETED,
     ];
 
     /**
@@ -88,8 +88,8 @@ class Order
      * Order types
      */
     public const ORDER_TYPES = [
-        OrderType::ORDER_TYPE_NATIONAL,
-        OrderType::ORDER_TYPE_INTERNATIONAL,
+        OrderType::NATIONAL,
+        OrderType::INTERNATIONAL,
     ];
 
     /**
@@ -109,9 +109,9 @@ class Order
      * Order categories
      */
     public const ORDER_CATEGORIES = [
-        OrderCategory::ORDER_CATEGORY_STANDARD,
-        OrderCategory::ORDER_CATEGORY_FUNERAL,
-        OrderCategory::ORDER_CATEGORY_GIFT_CARD,
+        OrderCategory::STANDARD,
+        OrderCategory::FUNERAL,
+        OrderCategory::GIFT_CARD,
     ];
 
     /**
@@ -163,7 +163,7 @@ class Order
      *     }
      * )
      */
-    protected $orderType = self::ORDER_TYPE_NATIONAL;
+    protected $orderType = OrderType::NATIONAL;
 
     /**
      * @var string
@@ -177,12 +177,12 @@ class Order
      *         "swagger_context"={
      *             "type"="string",
      *             "enum"={Order::ORDER_CATEGORIES},
-     *             "example"=Order::ORDER_CATEGORY_STANDARD
+     *             "example"=Order::STANDARD
      *         }
      *     }
      * )
      */
-    protected $category = self::ORDER_CATEGORY_STANDARD;
+    protected $category = OrderCategory::STANDARD;
 
     /**
      * @var string
@@ -196,12 +196,12 @@ class Order
      *         "swagger_context"={
      *             "type"="string",
      *             "enum"={Order::ORDER_STATUSES},
-     *             "example"=Order::ORDER_STATUS_NEW
+     *             "example"=Order::NEW
      *         }
      *     }
      * )
      */
-    protected $status = self::ORDER_STATUS_NEW;
+    protected $status = OrderStatus::NEW;
 
     /**
      * @var bool
@@ -646,7 +646,7 @@ class Order
      */
     public function setOrderTypeInternational(): Order
     {
-        return $this->setOrderType(self::ORDER_TYPE_INTERNATIONAL);
+        return $this->setOrderType(OrderType::INTERNATIONAL);
     }
 
     /**
@@ -654,7 +654,7 @@ class Order
      */
     public function setOrderTypeNational(): Order
     {
-        return $this->setOrderType(self::ORDER_TYPE_NATIONAL);
+        return $this->setOrderType(OrderType::NATIONAL);
     }
 
     /**
@@ -662,7 +662,7 @@ class Order
      */
     public function isInternationalOrder(): bool
     {
-        return $this->getOrderType() === self::ORDER_TYPE_INTERNATIONAL;
+        return $this->getOrderType() === OrderType::INTERNATIONAL;
     }
 
     /**
@@ -670,7 +670,7 @@ class Order
      */
     public function isNationalOrder(): bool
     {
-        return $this->getOrderType() === self::ORDER_TYPE_NATIONAL;
+        return $this->getOrderType() === OrderType::NATIONAL;
     }
 
     /**
@@ -779,7 +779,7 @@ class Order
      */
     public function setCanceled(): Order
     {
-        return $this->setStatus(self::ORDER_STATUS_CANCELED);
+        return $this->setStatus(OrderStatus::CANCELED);
     }
 
     /**
@@ -787,7 +787,7 @@ class Order
      */
     public function isCanceled(): bool
     {
-        return $this->getStatus() === self::ORDER_STATUS_CANCELED;
+        return $this->getStatus() === OrderStatus::CANCELED;
     }
 
     /**
