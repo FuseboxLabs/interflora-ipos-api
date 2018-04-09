@@ -7,51 +7,51 @@ class OrderStatus {
   /**
    * Order status new
    */
-  public const NEW = 'NEW';
+  public const NEW = 'new';
 
   /**
    * Order status printed
    */
-  public const PRINTED = 'PRINTED';
+  public const PRINTED = 'printed';
 
   /**
    * Order status not printed
    */
-  public const NOT_PRINTED = 'NOT_PRINTED';
+  public const NOT_PRINTED = 'not_printed';
 
   /**
    * Order status delivered
    */
-  public const DELIVERED = 'DELIVERED';
+  public const DELIVERED = 'delivered';
 
   /**
    * Order status canceled
    */
-  public const CANCELED = 'CANCELED';
+  public const CANCELED = 'canceled';
 
   /**
    * Order status completed
    */
-  public const COMPLETED = 'COMPLETED';
+  public const COMPLETED = 'completed';
 
   /**
    * Order status completed
    */
-  public const NAVISION_ERROR = 'NAVISION_ERROR';
+  public const NAVISION_ERROR = 'navision_error';
 
   /**
    * International order status pending approval
    */
-  public const PENDING_APPROVAL = 'PENDING_APPROVAL';
+  public const PENDING_APPROVAL = 'pending_approval';
 
   /**
    * International order status outgoing
    */
-  public const OUTGOING = 'OUTGOING';
+  public const OUTGOING = 'outgoing';
 
   /**
    * International order status sent to florist gate
    */
-  public const SENT = 'SENT';
+  public const SENT = 'sent';
 
 }
