@@ -69,7 +69,7 @@ class Api
       'Content-Type'  => 'application/json; charset=UTF-8',
     ];
     if ($this->username && $this->password) {
-      $heasers['Authorization'] = sprintf('Bearer %s', $this->getToken()),
+      $heasers['Authorization'] = sprintf('Bearer %s', $this->getToken());
     }
 
     return $heasers;
