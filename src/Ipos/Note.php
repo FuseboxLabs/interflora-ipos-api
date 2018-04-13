@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Entity;
+namespace Interflora\Ipos;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;

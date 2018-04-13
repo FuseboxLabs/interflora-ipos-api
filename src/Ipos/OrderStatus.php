@@ -2,7 +2,8 @@
 
 namespace Interflora\Ipos;
 
-class OrderStatus {
+class OrderStatus
+{
 
   /**
    * Order status new

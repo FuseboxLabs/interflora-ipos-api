@@ -2,7 +2,8 @@
 
 namespace Interflora\Ipos;
 
-class OrderType {
+class OrderType
+{
 
     /**
      * Order type national
