@@ -1,5 +1,5 @@
 {
-  "name": "interflora/interflora-ipos-order",
+  "name": "interflora/interflora-ipos-api",
   "type": "library",
   "description": "IPOS Order structure",
   "keywords": ["API"],
