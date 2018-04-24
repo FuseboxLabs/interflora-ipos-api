@@ -17,7 +17,7 @@ class ApiPath {
   /**
    * The path to submit shipments to queue.
    */
-  public const ORDER_QUEUE_PATH = '/api/orders/queue';
+  public const ORDER_QUEUE_PATH = '/api/order';
 
   /**
    * Login path.
