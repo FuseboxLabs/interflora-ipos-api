@@ -176,7 +176,7 @@ class Api
    *   The transformed shipment data.
    */
   public function sendOrderQueue($data) {
-    $this->sendOrder($data, ApiPath::ORDER_QUEUE_PATH);
+    return $this->sendOrder($data, ApiPath::ORDER_QUEUE_PATH);
   }
 
   /**
