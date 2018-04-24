@@ -15,6 +15,11 @@ class ApiPath {
   public const ORDER_PATH = '/api/orders';
 
   /**
+   * The path to update states on existing orders
+   */
+  public const ORDER_STATE_UPDATE_PATH = '/api/orders/batch';
+
+  /**
    * The path to submit shipments to queue.
    */
   public const ORDER_QUEUE_PATH = '/api/order';

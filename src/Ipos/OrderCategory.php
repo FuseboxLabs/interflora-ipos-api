@@ -19,4 +19,9 @@ class OrderCategory {
      */
     public const GIFT_CARD = 'gift_card';
 
+  /**
+   * Order category subscription
+   */
+  public const SUBSCRIPTION = 'subscription';
+
 }
