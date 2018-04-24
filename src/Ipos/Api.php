@@ -64,15 +64,15 @@ class Api
    *   An array with relevant header information.
    */
   protected function getHeaders() {
-    $heasers = [
+    $headers = [
       'Accept' => 'application/json',
       'Content-Type'  => 'application/json; charset=UTF-8',
     ];
     if ($this->username && $this->password) {
-      $heasers['Authorization'] = sprintf('Bearer %s', $this->getToken());
+      $headers['Authorization'] = sprintf('Bearer %s', $this->getToken());
     }
 
-    return $heasers;
+    return $headers;
   }
 
   /**
@@ -98,6 +98,36 @@ class Api
         'code' => 200,
         'body' => $response->getBody(),
       ];
+    }
+    catch (\Exception $e) {
+      return [
+        'code' => $e->getCode(),
+        'body' => $e->getMessage(),
+      ];
+    }
+  }
+
+  /**
+   * Update order state for existing order
+   *
+   * @param $orderId
+   * @param $state
+   * @param string $path
+   * @return array
+   */
+  public function updateOrderState($orderId, $state, $path = ApiPath::ORDER_STATE_UPDATE_PATH) {
+    try {
+      $response = $this->client->put($path . '/' . $state, [
+        'json' => $orderId,
+        'headers' => $this->getHeaders(),
+        'debug' => true,
+      ]);
+
+      return [
+        'code' => 200,
+        'body' => $response->getBody(),
+      ];
+
     }
     catch (\Exception $e) {
       return [
