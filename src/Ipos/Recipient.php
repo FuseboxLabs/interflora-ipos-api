@@ -110,7 +110,7 @@ class Recipient
      *
      * @Groups({"recipient_get", "recipient_set"})
      */
-    protected $phone;
+    protected $phoneNumber;
 
     /**
      * @TODO create GEO entity, or leave it as a string?
@@ -288,7 +288,7 @@ class Recipient
      */
     public function getPhone(): string
     {
-        return $this->phone;
+        return $this->phoneNumber;
     }
 
     /**
@@ -298,7 +298,7 @@ class Recipient
      */
     public function setPhone(string $phone): Recipient
     {
-        $this->phone = $phone;
+        $this->phoneNumber = $phone;
 
         return $this;
     }
