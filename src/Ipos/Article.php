@@ -34,6 +34,16 @@ class Article
     protected $id;
 
     /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=50)
+     *
+     * @Groups({"article_get", "article_set", "get", "set"})
+     */
+    protected $title;
+
+    /**
      * @var Order
      *
      * @Gedmo\Versioned
@@ -189,6 +199,25 @@ class Article
     public function setId(int $id): Article
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }
