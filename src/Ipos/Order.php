@@ -401,10 +401,10 @@ class Order
     protected $currency;
 
     /**
-     * @var string
+     * @var integer
      *
      * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
+     * @ORM\Column(type="integer", nullable=true)
      *
      * @Groups({"get", "set"})
      */
@@ -1179,19 +1179,19 @@ class Order
     }
 
     /**
-     * @return string
+     * @return integer
      */
-    public function getExecutingMember(): ? string
+    public function getExecutingMember(): ? int
     {
         return $this->executingMember;
     }
 
     /**
-     * @param string $executingMember
+     * @param integer $executingMember
      *
      * @return Order
      */
-    public function setExecutingMember(string $executingMember): Order
+    public function setExecutingMember(int $executingMember = null): Order
     {
         $this->executingMember = $executingMember;
 
