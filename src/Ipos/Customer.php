@@ -101,7 +101,7 @@ class Customer
      *
      * @Groups({"customer_get", "customer_set", "get", "set"})
      */
-    protected $phone = '';
+    protected $phoneNumber = '';
 
     /**
      * @var string
@@ -286,7 +286,7 @@ class Customer
      */
     public function getPhone(): string
     {
-        return $this->phone;
+        return $this->phoneNumber;
     }
 
     /**
@@ -296,7 +296,7 @@ class Customer
      */
     public function setPhone(string $phone): Customer
     {
-        $this->phone = $phone;
+        $this->phoneNumber = $phone;
 
         return $this;
     }
