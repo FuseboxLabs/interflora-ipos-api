@@ -2,6 +2,9 @@
 
 namespace Interflora\Ipos;
 
+/**
+ * Class OrderStatus
+ */
 class OrderStatus
 {
 
