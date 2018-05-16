@@ -1331,7 +1331,7 @@ class Order
      */
     public function getRibbons()
     {
-        return $this->notes;
+        return $this->ribbons;
     }
 
     /**

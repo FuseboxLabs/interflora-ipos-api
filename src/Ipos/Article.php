@@ -4,189 +4,111 @@ namespace Interflora\Ipos;
 
 /**
  * Class Article
- *
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @Gedmo\Loggable
- * @ORM\Entity
- * @ApiResource(
- *   attributes={
- *     "normalization_context"={
- *       "groups"={"article_get"}
- *     },
- *    "denormalization_context"={
- *       "groups"={"article_set"}
- *     }
- *   }
- * )
  */
 class Article
 {
-
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"article_get"})
      */
     protected $id;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"article_get", "article_set", "get", "set"})
      */
     protected $title;
 
     /**
      * @var Order
-     *
-     * @Gedmo\Versioned
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="articles")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
-     *
-     * @Groups({"article_get", "article_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Order",
-     *             "example"="/api/orders/1"
-     *         }
-     *     }
-     * )
      */
     protected $order;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"article_get", "article_set"})
      */
     protected $artCode;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="text")
-     *
-     * @Groups({"article_get", "article_set", "get", "set"})
      */
     protected $type;
 
     /**
      * @var int
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"article_get", "article_set"})
      */
     protected $quantity;
 
     /**
      * @var float
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="float", precision=2)
-     *
-     * @Groups({"article_get", "article_set", "get", "set"})
      */
     protected $price;
 
     /**
+     * @var float
+     */
+    protected $lineTotal;
+
+    /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="text")
-     *
-     * @Groups({"article_get", "article_set"})
      */
     protected $description;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="text")
-     *
-     * @Groups({"article_get", "article_set"})
      */
-    protected $comment;
+    protected $comment = '';
 
     /**
-     * @var int
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"article_get", "article_set"})
+     * @var string
      */
     protected $productGroup;
 
     /**
      * @var bool
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="boolean")
-     *
-     * @Groups({"article_get", "article_set"})
      */
-    protected $netAmountArticle;
+    protected $netAmountArticle = false;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"article_get", "article_set"})
      */
-    protected $picturePath;
+    protected $picturePath = '';
+
+    /**
+     * @var array Array of strings.
+     */
+    protected $ribbons;
 
     /**
      * @var int
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"article_get", "article_set"})
      */
     protected $vatRate;
 
     /**
-     * @var Article[]|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="article",
-     *                                                   cascade={"persist"},
-     *                                                   orphanRemoval=true)
-     *
-     * @Groups({"article_get", "article_set", "get", "set"})
+     * @var array An array of articles.
      */
     protected $subArticles = [];
 
     /**
-     * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="json")
-     *
-     * @Groups({"payment_get", "payment_set"})
+     * @var Article
      */
-    protected $data;
+    protected $parent;
+
+    /**
+     * @var string
+     */
+    protected $data = '';
+
+    /**
+     * Article constructor.
+     */
+    public function __construct()
+    {
+
+    }
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -196,7 +118,7 @@ class Article
      *
      * @return Article
      */
-    public function setId(int $id): Article
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -210,6 +132,7 @@ class Article
     {
         return $this->title;
     }
+
     /**
      * @param string $title
      *
@@ -223,9 +146,12 @@ class Article
     }
 
     /**
+     * Sub articles doesn't have order due to doctrine limitations
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/working-with-associations.html#orphan-removal
+     *
      * @return Order
      */
-    public function getOrder(): Order
+    public function getOrder():? Order
     {
         return $this->order;
     }
@@ -235,7 +161,7 @@ class Article
      *
      * @return Article
      */
-    public function setOrder(Order $order): Article
+    public function setOrder(Order $order): self
     {
         $this->order = $order;
 
@@ -255,7 +181,7 @@ class Article
      *
      * @return Article
      */
-    public function setArtCode(string $artCode): Article
+    public function setArtCode(string $artCode): self
     {
         $this->artCode = $artCode;
 
@@ -266,11 +192,10 @@ class Article
      * Get the article type, e.g. product, bundle, etc.
      *
      * @return string
-     *   The string representation of the article type.
      */
     public function getType(): string
     {
-      return $this->type;
+        return $this->type;
     }
 
     /**
@@ -280,11 +205,11 @@ class Article
      *
      * @return Article
      */
-    public function setType(string $type): Article
+    public function setType(string $type): self
     {
-      $this->type = $type;
+        $this->type = $type;
 
-      return $this;
+        return $this;
     }
 
     /**
@@ -300,7 +225,7 @@ class Article
      *
      * @return Article
      */
-    public function setQuantity(int $quantity): Article
+    public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
 
@@ -320,9 +245,49 @@ class Article
      *
      * @return Article
      */
-    public function setPrice($price): Article
+    public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLineTotal(): float
+    {
+        return $this->lineTotal;
+    }
+
+    /**
+     * @param float $total
+     *
+     * @return Article
+     */
+    public function setLineTotal(float $total): self
+    {
+        $this->lineTotal = $total;
+
+        return $this;
+    }
+
+    /**
+     * @return Article|null
+     */
+    public function getParent(): ?Article
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param Article $parent
+     *
+     * @return Article
+     */
+    public function setParent(Article $parent): self
+    {
+        $this->parent = $parent;
 
         return $this;
     }
@@ -340,7 +305,7 @@ class Article
      *
      * @return Article
      */
-    public function setDescription(string $description): Article
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -360,7 +325,7 @@ class Article
      *
      * @return Article
      */
-    public function setComment(string $comment): Article
+    public function setComment(string $comment): self
     {
         $this->comment = $comment;
 
@@ -368,9 +333,9 @@ class Article
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getProductGroup(): int
+    public function getProductGroup(): string
     {
         return $this->productGroup;
     }
@@ -380,7 +345,7 @@ class Article
      *
      * @return Article
      */
-    public function setProductGroup(string $productGroup): Article
+    public function setProductGroup(string $productGroup): self
     {
         $this->productGroup = $productGroup;
 
@@ -400,7 +365,7 @@ class Article
      *
      * @return Article
      */
-    public function setNetAmountArticle(bool $netAmountArticle): Article
+    public function setNetAmountArticle(bool $netAmountArticle): self
     {
         $this->netAmountArticle = $netAmountArticle;
 
@@ -412,7 +377,7 @@ class Article
      */
     public function getPicturePath(): string
     {
-        return $this->picturePath;
+      return $this->picturePath;
     }
 
     /**
@@ -420,9 +385,29 @@ class Article
      *
      * @return Article
      */
-    public function setPicturePath(string $picturePath): Article
+    public function setPicturePath(string $picturePath): self
     {
         $this->picturePath = $picturePath;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRibbons()
+    {
+        return $this->ribbons;
+    }
+
+    /**
+     * @param array $ribbons
+     *
+     * @return Article
+     */
+    public function setRibbons($ribbons): self
+    {
+        $this->ribbons = $ribbons;
 
         return $this;
     }
@@ -440,7 +425,7 @@ class Article
      *
      * @return Article
      */
-    public function setVatRate(int $vatRate): Article
+    public function setVatRate(int $vatRate): self
     {
         $this->vatRate = $vatRate;
 
@@ -452,11 +437,11 @@ class Article
      * This is relevant for bundle products,
      * which are comprised of multiple other products.
      *
-     * @return Article[]
+     * @return array
      */
-    public function getSubArticles()
+    public function getSubArticles(): array
     {
-      return $this->subArticles;
+        return $this->subArticles;
     }
 
     /**
@@ -466,11 +451,19 @@ class Article
      *
      * @return Article
      */
-    public function setSubArticles($articles): Article
+    public function setSubArticles($articles): self
     {
-      $this->subArticles = $articles;
+        $this->subArticles = $articles;
 
-      return $this;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSubArticles(): bool
+    {
+        return $this->getSubArticles()->count() > 0;
     }
 
     /**
@@ -478,7 +471,7 @@ class Article
      */
     public function getData(): string
     {
-      return $this->data;
+        return $this->data;
     }
 
     /**
@@ -486,11 +479,11 @@ class Article
      *
      * @return Article
      */
-    public function setData(string $data): Article
+    public function setData(string $data): self
     {
-      $this->data = $data;
+        $this->data = $data;
 
-      return $this;
+        return $this;
     }
 
 }

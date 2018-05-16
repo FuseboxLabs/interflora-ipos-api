@@ -1,0 +1,13 @@
+version: "2"
+exclude_patterns:
+- "c3.php"
+- "bin/"
+- "config/"
+- "templates/"
+- "translations/"
+- "var/"
+- "vendor/"
+- "src/Migrations"
+- "src/DataFixtures"
+- "src/Kernel.php"
+- "tests/"
