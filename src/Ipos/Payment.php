@@ -22,6 +22,15 @@ class Payment
 {
 
     /**
+     * Payment capture statuses.
+     */
+    public const PAYMENT_CAPTURE_STATUS = [
+        PaymentStatus::NEW,
+        PaymentStatus::COMPLETED,
+        PaymentStatus::ERROR,
+    ];
+
+    /**
      * @var int
      *
      * @ORM\Id
@@ -31,6 +40,25 @@ class Payment
      * @Groups({"payment_get"})
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=20)
+     *
+     * @Groups({"get", "set"})
+     * @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *             "type"="string",
+     *             "enum"={Payment::PAYMENT_CAPTURE_STATUS},
+     *             "example"=PaymentStatus::NEW
+     *         }
+     *     }
+     * )
+     */
+    protected $status = PaymentStatus::NEW;
 
     /**
      * @var string
@@ -108,6 +136,26 @@ class Payment
     public function setId(int $id): Payment
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     *
+     * @return Payment
+     */
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
