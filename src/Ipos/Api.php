@@ -41,9 +41,14 @@ class Api
     private $baseAuthenticationUri;
 
     /**
+     * @var boolean
+     */
+    private $debug;
+
+    /**
      * IposApi constructor.
      */
-    public function __construct($url, $authenticationUrl, $username = '', $password = '')
+    public function __construct($url, $authenticationUrl, $username = '', $password = '', $debug = FALSE)
     {
         if ($username && $password) {
             $this->username = $username;
@@ -55,6 +60,7 @@ class Api
             'base_uri' => $url,
         ];
         $this->client = new Client($clientArgs);
+        $this->debug = $debug;
     }
 
     /**
@@ -77,6 +83,53 @@ class Api
     }
 
     /**
+     * Get options for a request.
+     *
+     * @param array $query
+     *
+     * @return array
+     */
+    protected function getOptions($query = []) {
+        $options = [
+            'headers' => $this->getHeaders(),
+        ];
+        if (!empty($query)) {
+            $options['query'] = urldecode(http_build_query($query));
+        }
+        if ($this->debug) {
+            $options['debug'] = $this->debug;
+        }
+        return $options;
+    }
+
+    /**
+     * Get orders from core.
+     *
+     * @param string $path
+     *   Path to the endpoint.
+     * @param array $query
+     *   Query parameters for the request.
+     *
+     * @return array
+     *   Success.
+     */
+    public function getOrders($path = ApiPath::ORDER_PATH, $query = [])
+    {
+        try {
+            $response = $this->client->get($path, $this->getOptions($query));
+            return [
+                'code' => 200,
+                'body' => $response->getBody()->getContents(),
+            ];
+        } catch (\Exception $e) {
+            return [
+                'code' => $e->getCode(),
+                'body' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
      * Send order data.
      *
      * @param string $data
@@ -90,11 +143,9 @@ class Api
     public function sendOrder($data, $path = ApiPath::ORDER_PATH)
     {
         try {
-            $response = $this->client->post($this->baseUri . $path, [
-                'json'    => $data,
-                'headers' => $this->getHeaders(),
-                'debug'   => true,
-            ]);
+            $options = $this->getOptions();
+            $options['json'] = $data;
+            $response = $this->client->post($path, $options);
 
             return [
                 'code' => 200,
@@ -122,11 +173,9 @@ class Api
     public function putOrder($data, $path = ApiPath::ORDER_PATH)
     {
         try {
-            $response = $this->client->put($this->baseUri . $path, [
-                'json'    => $data,
-                'headers' => $this->getHeaders(),
-                'debug'   => true,
-            ]);
+            $options = $this->getOptions();
+            $options['json'] = $data;
+            $response = $this->client->put($path, $options);
 
             return [
                 'code' => 200,
@@ -154,11 +203,9 @@ class Api
     public function putCreditNote($data, $path = ApiPath::CREDIT_NOTE_PATH)
     {
         try {
-            $response = $this->client->put($this->baseUri . $path, [
-                'json'    => $data,
-                'headers' => $this->getHeaders(),
-                'debug'   => true,
-            ]);
+            $options = $this->getOptions();
+            $options['json'] = $data;
+            $response = $this->client->put($path, $options);
 
             return [
                 'code' => 200,
@@ -183,11 +230,9 @@ class Api
     public function updateOrderState($orderId, $state, $path = ApiPath::ORDER_STATE_UPDATE_PATH)
     {
         try {
-            $response = $this->client->put($path . '/' . $state, [
-                'json'    => $orderId,
-                'headers' => $this->getHeaders(),
-                'debug'   => true,
-            ]);
+            $options = $this->getOptions();
+            $options['json'] = $orderId;
+            $response = $this->client->put($path . '/' . $state, $options);
 
             return [
                 'code' => 200,
