@@ -528,6 +528,15 @@ class Order
     /**
      * @var string
      *
+     * @ORM\Column(type="text")
+     *
+     * @Groups({"get", "set"})
+     */
+    protected $standardCardText = '';
+
+    /**
+     * @var string
+     *
      * @Gedmo\Versioned
      * @ORM\Column(type="json")
      *
@@ -1362,6 +1371,26 @@ class Order
     public function setIpAddress(string $ipAddress): Order
     {
         $this->ipAddress = $ipAddress;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStandardCardText(): string
+    {
+        return $this->standardCardText;
+    }
+
+    /**
+     * @param string $standardCardText
+     *
+     * @return $this
+     */
+    public function setStandardCardText(string $standardCardText): self
+    {
+        $this->standardCardText = $standardCardText;
 
         return $this;
     }
