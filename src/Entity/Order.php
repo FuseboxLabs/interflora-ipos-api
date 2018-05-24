@@ -262,8 +262,6 @@ class Order
 
     /**
      * @var string[]|ArrayCollection
-
-     * @Groups({"get", "set"})
      */
     protected $ribbons;
 
