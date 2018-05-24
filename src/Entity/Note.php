@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Interflora\Ipos;
+namespace Interflora\IposApi\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -14,108 +14,42 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class Note
- *
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @Gedmo\Loggable
- * @ORM\Entity
- * @ApiResource(
- *   attributes={
- *     "normalization_context"={
- *       "groups"={"note_get"}
- *     },
- *    "denormalization_context"={
- *       "groups"={"note_set"}
- *     },
- *    "filters"={
- *       "note.order_filter",
- *    }
- *   }
- * )
  */
 class Note
 {
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"note_get", "get"})
      */
     protected $id;
 
     /**
      * @var Order
-     *
-     * @Gedmo\Versioned
-     * @ORM\ManyToOne(
-     *     targetEntity="App\Entity\Order",
-     *     inversedBy="notes"
-     * )
-     * @ORM\JoinColumn(
-     *     name="order_id",
-     *     referencedColumnName="id"
-     * )
-     *
-     * @Groups({"note_get", "note_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Order",
-     *             "example"="/api/orders/1"
-     *         }
-     *     }
-     * )
      */
     protected $order;
 
     /**
      * @var bool
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="boolean")
-     *
-     * @Groups({"note_get", "note_set", "get"})
      */
     protected $visibleOnlyCS;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="text")
-     *
-     * @Groups({"note_get", "note_set", "get"})
      */
     protected $note;
 
     /**
      * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"note_get", "get"})
      */
     protected $createdAt;
 
     /**
      * @var string
-     * @Gedmo\Blameable(on="create")
-     * @ORM\Column(nullable=true)
-     *
-     * @Groups({"note_get", "get"})
      */
     protected $createdBy;
 
     /**
      * @var string
-     * @Gedmo\Blameable(on="update")
-     * @ORM\Column(nullable=true)
-     *
-     * @Groups({"note_get", "get"})
      */
     protected $updatedBy;
 

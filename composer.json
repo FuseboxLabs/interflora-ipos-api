@@ -1,6 +1,6 @@
 {
   "name": "interflora/interflora-ipos-api",
-  "type": "library",
+  "type": "symfony-bundle",
   "description": "IPOS Order structure",
   "keywords": ["API"],
   "homepage": "https://interflora.dk",
@@ -20,11 +20,17 @@
   ],
   "require": {
     "php": ">=7.1",
-    "guzzlehttp/guzzle": "^6.2"
+    "guzzlehttp/guzzle": "^6.2",
+    "symfony/validator": "^4.0"
   },
   "autoload": {
     "psr-4" : {
-      "Interflora\\Ipos\\" : "src/Ipos"
+      "Interflora\\IposApi\\" : "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Interflora\\IposApi\\Tests\\": "tests/"
     }
   }
 }

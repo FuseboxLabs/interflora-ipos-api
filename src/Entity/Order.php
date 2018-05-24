@@ -1,39 +1,13 @@
 <?php
-namespace Interflora\Ipos;
+namespace Interflora\IposApi\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Interflora\IposApi\Constant\OrderCategory;
+use Interflora\IposApi\Constant\OrderStatus;
+use Interflora\IposApi\Constant\OrderType;
+
 /**
  * Class Order
- *
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @Gedmo\Loggable
- * @ORM\Entity
- * @ORM\Table(name="orders")
- * @ApiResource(
- *   itemOperations={
- *     "get"={"method"="GET", "path"="/orders/{id}"},
- *     "put"={"method"="PUT", "path"="/orders/{id}"},
- *     "delete"={"method"="DELETE", "path"="/orders/{id}"},
- *     "custom_post"={"route_name"="order_special_post", "description"="Creates
- *     a Order resource from json with related entities."}
- *   },
- *   attributes={
- *     "normalization_context"={
- *       "groups"={"order_get"}
- *     },
- *    "denormalization_context"={
- *       "groups"={"order_set"}
- *     },
- *    "filters"={
- *       "order.search_filter",
- *       "order.range_filter",
- *       "order.date_filter",
- *       "order.boolean_filter",
- *       "order.numeric_filter",
- *       "order.order_filter",
- *    }
- *   }
- * )
  */
 class Order
 {
@@ -116,90 +90,31 @@ class Order
 
     /**
      * @var string
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     * @Groups({"get"})
      */
     protected $id;
 
     /**
      * Order id from external systems.
-     *
-     * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"get", "set"})
      */
     protected $orderId;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"get"})
      */
     protected $sourceInformation;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=20)
-     *
-     * @Groups({"get", "set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="string",
-     *             "enum"={Order::ORDER_TYPES},
-     *             "example"=Order::ORDER_TYPE_NATIONAL
-     *         }
-     *     }
-     * )
      */
     protected $orderType = OrderType::NATIONAL;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=20)
-     *
-     * @Groups({"get", "set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="string",
-     *             "enum"={Order::ORDER_CATEGORIES},
-     *             "example"=Order::STANDARD
-     *         }
-     *     }
-     * )
      */
     protected $category = OrderCategory::STANDARD;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=20)
-     *
-     * @Groups({"get", "set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="string",
-     *             "enum"={Order::ORDER_STATUSES},
-     *             "example"=Order::NEW
-     *         }
-     *     }
-     * )
      */
     protected $status = OrderStatus::NEW;
 
@@ -212,299 +127,136 @@ class Order
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"get", "set"})
      */
     protected $fromCountry;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"get", "set"})
      */
     protected $toCountry;
 
     /**
      * @var \DateTime
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"get", "set"})
      */
     protected $deliveryDate;
 
     /**
      * @var \DateTime
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"get", "set"})
      */
     protected $funeralTime;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=100)
-     *
-     * @Groups({"get", "set"})
      */
     protected $deliveryInterval = '';
 
     /**
      * @var ExternalReference[]|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\ExternalReference", mappedBy="order", cascade={"persist"},
-     *                                                             orphanRemoval=true)
-     *
-     * @Groups({"get", "set"})
      */
     protected $externalReferences;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"get", "set"})
      */
     protected $sendingMember;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"get", "set"})
      */
     protected $orderRemarks = '';
 
     /**
      * @var \DateTime
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"get", "set"})
      */
     protected $orderDate;
 
     /**
      * @var bool
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="boolean")
-     *
-     * @Groups({"get", "set"})
      */
     protected $leaveAtDoor = false;
 
     /**
      * @var bool
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="boolean")
-     *
-     * @Groups({"get", "set"})
      */
     protected $leaveAtNeighbour = false;
 
     /**
      * @var bool
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="boolean")
-     *
-     * @Groups({"get", "set"})
      */
     protected $confirmSMS = false;
 
     /**
      * @var bool
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="boolean")
-     *
-     * @Groups({"get", "set"})
      */
     protected $confirmMail = false;
 
     /**
      * @var float
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="float", precision=2)
-     *
-     * @Groups({"get", "set"})
      */
     protected $orderTotal;
 
     /**
      * @var float
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="float", precision=2)
-     *
-     * @Groups({"get", "set"})
      */
     protected $flowerTotal;
 
     /**
      * @var float
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="float", precision=2)
-     *
-     * @Groups({"get", "set"})
      */
     protected $netAmountTotal;
 
     /**
      * @var float
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="float", precision=2)
-     *
-     * @Groups({"get", "set"})
      */
     protected $serviceCost;
 
     /**
      * @var float
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="float", precision=2)
-     *
-     * @Groups({"get", "set"})
      */
     protected $executingMemberCost;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=true)
-     *
-     * @Groups({"get", "set"})
      */
     protected $currency;
 
     /**
      * @var integer
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="integer", nullable=true)
-     *
-     * @Groups({"get", "set"})
      */
     protected $executingMember;
 
     /**
      * @var Recipient
-     *
-     * @Gedmo\Versioned
-     * @ORM\OneToOne(
-     *     targetEntity="App\Entity\Recipient",
-     *     cascade={"persist"},
-     *     orphanRemoval=true
-     * )
-     * @JoinColumn(
-     *     name="recipient",
-     *     referencedColumnName="id"
-     * )
-     *
-     * @Groups({"get", "set"})
      */
     protected $recipient;
 
     /**
      * @var Customer
-     *
-     * @Gedmo\Versioned
-     * @ORM\OneToOne(
-     *     targetEntity="App\Entity\Customer",
-     *     cascade={"persist"},
-     *     orphanRemoval=true
-     * )
-     * @JoinColumn(
-     *     name="customer",
-     *     referencedColumnName="id"
-     * )
-     *
-     * @Groups({"get", "set"})
      */
     protected $customer;
 
     /**
      * @var Article[]|ArrayCollection
-     *
-     * @ORM\OneToMany(
-     *     targetEntity="App\Entity\Article",
-     *     mappedBy="order",
-     *     cascade={"persist"},
-     *     orphanRemoval=true
-     * )
-     *
-     * @Groups({"get", "set"})
      */
     protected $articles;
 
     /**
      * @var Payment[]|ArrayCollection
-     *
-     * @ORM\OneToMany(
-     *     targetEntity="App\Entity\Payment",
-     *     mappedBy="order",
-     *     cascade={"persist"},
-     *     orphanRemoval=true
-     * )
-     *
-     * @Groups({"get", "set"})
      */
     protected $payments;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"get", "set"})
      */
     protected $print = '';
 
     /**
      * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"get"})
      */
     protected $createdAt;
 
     /**
      * @var Note[]|ArrayCollection
-     *
-     * @ORM\OneToMany(
-     *     targetEntity="App\Entity\Note",
-     *     mappedBy="order",
-     *     cascade={"persist"},
-     *     orphanRemoval=true
-     * )
-     * @Groups({"get"})
-     * @ApiSubresource
      */
     protected $notes;
 
@@ -517,30 +269,16 @@ class Order
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=20)
-     *
-     * @Groups({"get", "set"})
      */
     protected $ipAddress = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text")
-     *
-     * @Groups({"get", "set"})
      */
     protected $standardCardText = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="json")
-     *
-     * @Groups({"article_get", "article_set"})
      */
     protected $data = '';
 

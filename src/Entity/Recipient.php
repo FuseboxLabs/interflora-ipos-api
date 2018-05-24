@@ -1,125 +1,59 @@
 <?php
 
-namespace Interflora\Ipos;
+namespace Interflora\IposApi\Entity;
 /**
  * Class Recipient
- *
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @Gedmo\Loggable
- * @ORM\Entity
- * @ApiResource(
- *   attributes={
- *     "normalization_context"={
- *       "groups"={"recipient_get"}
- *     },
- *    "denormalization_context"={
- *       "groups"={"recipient_set"}
- *     }
- *   }
- * )
  */
 class Recipient
 {
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"recipient_get"})
      */
     protected $id;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"recipient_get", "recipient_set"})
      */
     protected $name;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"recipient_get", "recipient_set"})
      */
     protected $co;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"recipient_get", "recipient_set"})
      */
     protected $street;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"recipient_get", "recipient_set"})
      */
     protected $street2;
 
   /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"recipient_get", "recipient_set"})
      */
     protected $zip;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"recipient_get", "recipient_set"})
      */
     protected $city;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"recipient_get", "recipient_set", "get", "set"})
      */
     protected $church = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"recipient_get", "recipient_set"})
      */
     protected $phoneNumber;
 
     /**
-     * @TODO create GEO entity, or leave it as a string?
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"recipient_get", "recipient_set"})
      */
     protected $deliveryLocation;
 
