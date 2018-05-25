@@ -1,6 +1,6 @@
 <?php
 
-namespace Interflora\Ipos;
+namespace Interflora\IposApi\Service;
 
 use GuzzleHttp\Client;
 
