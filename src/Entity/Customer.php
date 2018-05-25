@@ -15,6 +15,8 @@ class Customer
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $name = '';
 
@@ -50,11 +52,18 @@ class Customer
 
     /**
      * @var string
+     *
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
      */
     protected $mail;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $type = 'b2c';
 

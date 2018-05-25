@@ -12,7 +12,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class Debitor
- * )
  */
 class Debitor
 {
@@ -24,6 +23,8 @@ class Debitor
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $type = '';
 

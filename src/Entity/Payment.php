@@ -26,21 +26,29 @@ class Payment
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $status = PaymentStatus::NEW;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $method;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $transactionId;
 
     /**
      * @var float
+     *
+     * @Assert\NotNull()
      */
     protected $price;
 

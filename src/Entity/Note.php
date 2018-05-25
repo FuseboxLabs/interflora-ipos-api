@@ -30,28 +30,24 @@ class Note
 
     /**
      * @var bool
+     *
+     * @Assert\NotNull()
      */
-    protected $visibleOnlyCS;
+    protected $visibleOnlyCS = false;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $note;
 
     /**
      * @var \DateTime
+     *
+     * @Assert\DateTime()
      */
     protected $createdAt;
-
-    /**
-     * @var string
-     */
-    protected $createdBy;
-
-    /**
-     * @var string
-     */
-    protected $updatedBy;
 
 
     /**

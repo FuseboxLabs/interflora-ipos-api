@@ -20,12 +20,16 @@ class ExternalReference
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $service;
 
 
     /**
      * @var string External order id
+     *
+     * @Assert\NotNull()
      */
     protected $orderId;
 
