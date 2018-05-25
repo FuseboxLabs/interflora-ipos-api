@@ -14,46 +14,68 @@ class Recipient
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $name;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $co;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $street;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $street2;
 
   /**
      * @var string
+   *
+   * @Assert\NotNull()
+   * @Assert\NotBlank()
      */
     protected $zip;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $city;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $church = '';
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $phoneNumber;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $deliveryLocation;
 

@@ -5,9 +5,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Interflora\IposApi\Constant\OrderCategory;
 use Interflora\IposApi\Constant\OrderStatus;
 use Interflora\IposApi\Constant\OrderType;
+use Symfony\Component\Validator\Constraints as Assert;
+use Interflora\IposApi\Validator\Constraints as InterfloraAssert;
 
 /**
  * Class Order
+ *
+ * @InterfloraAssert\OrderTotal()
+ * @InterfloraAssert\OrderTypeCountries()
+ * @InterfloraAssert\ExecutingMemberCost()
+ * @InterfloraAssert\FuneralOrder()
  */
 class Order
 {
@@ -95,58 +102,83 @@ class Order
 
     /**
      * Order id from external systems.
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $orderId;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $sourceInformation;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $orderType = OrderType::NATIONAL;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $category = OrderCategory::STANDARD;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $status = OrderStatus::NEW;
 
     /**
      * @var bool
-     *
-     * @Groups({"get"})
      */
     protected $isDelivered;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $fromCountry;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $toCountry;
 
     /**
      * @var \DateTime
+     *
+     * @Assert\DateTime()
      */
     protected $deliveryDate;
 
     /**
      * @var \DateTime
+     *
+     * @Assert\DateTime()
      */
     protected $funeralTime;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
      */
     protected $deliveryInterval = '';
 
@@ -157,6 +189,9 @@ class Order
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $sendingMember;
 
@@ -167,6 +202,8 @@ class Order
 
     /**
      * @var \DateTime
+     *
+     * @Assert\DateTime()
      */
     protected $orderDate;
 
@@ -192,6 +229,9 @@ class Order
 
     /**
      * @var float
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $orderTotal;
 
@@ -207,41 +247,64 @@ class Order
 
     /**
      * @var float
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $serviceCost;
 
     /**
      * @var float
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $executingMemberCost;
 
     /**
      * @var string
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $currency;
 
     /**
      * @var integer
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $executingMember;
 
     /**
      * @var Recipient
+     *
+     * @Assert\NotBlank()
+     * @Assert\Collection()
      */
     protected $recipient;
 
     /**
      * @var Customer
+     *
+     * @Assert\Collection()
      */
     protected $customer;
 
     /**
      * @var Article[]|ArrayCollection
+     *
+     * @Assert\NotBlank()
+     * @Assert\Collection()
      */
     protected $articles;
 
     /**
      * @var Payment[]|ArrayCollection
+     *
+     * @Assert\NotBlank()
+     * @Assert\Collection()
      */
     protected $payments;
 
@@ -598,7 +661,7 @@ class Order
     /**
      * @return \DateTime
      */
-    public function getFuneralTime(): \DateTime
+    public function getFuneralTime()
     {
         return $this->funeralTime;
     }
