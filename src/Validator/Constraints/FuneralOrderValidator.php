@@ -31,7 +31,7 @@ class FuneralOrderValidator extends ConstraintValidator
      */
     public function validate($object, Constraint $constraint)
     {
-        if ($object->getType() === OrderCategory::FUNERAL) {
+        if ($object->getCategory() === OrderCategory::FUNERAL) {
             $recipient = $object->getRecipient();
             if (!$this->orderValidation->validateChurch($recipient)) {
                 $this->context->buildViolation($constraint->message)
