@@ -9,28 +9,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 /**
  * Class OrderTotalValidator
  */
-class OrderTotalValidator extends ConstraintValidator
+class OrderTotalValidator extends AbstractOrderValidator
 {
-
-    /**
-     * @var OrderValidationService
-     */
-    protected $orderValidation;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(OrderValidationService $orderValidation)
-    {
-        $this->orderValidation = $orderValidation;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function validate($object, Constraint $constraint)
     {
-        if (!$this->orderValidation->validateOrderTotal($object)) {
+        if ($this->isValidOrder($object) && !$this->orderValidation->validateOrderTotal($object)) {
             $this->context->buildViolation($constraint->message)
                 ->atPath('orderTotal')
                 ->addViolation();

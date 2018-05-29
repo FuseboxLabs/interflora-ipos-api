@@ -9,28 +9,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 /**
  * Class ExecutingMemberCostValidator
  */
-class ExecutingMemberCostValidator extends ConstraintValidator
+class ExecutingMemberCostValidator extends AbstractOrderValidator
 {
-
-    /**
-     * @var OrderValidationService
-     */
-    protected $orderValidation;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(OrderValidationService $orderValidation)
-    {
-        $this->orderValidation = $orderValidation;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function validate($object, Constraint $constraint)
     {
-        if (!$this->orderValidation->validateExecutingMemberCost($object)) {
+        if ($this->isValidOrder($object) && !$this->orderValidation->validateExecutingMemberCost($object)) {
             $this->context->buildViolation($constraint->message)
                 ->atPath('executingMemberCost')
                 ->addViolation();

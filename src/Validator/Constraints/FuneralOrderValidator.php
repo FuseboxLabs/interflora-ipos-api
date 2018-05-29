@@ -10,35 +10,17 @@ use Symfony\Component\Validator\ConstraintValidator;
 /**
  * Class OrderTotalValidator
  */
-class FuneralOrderValidator extends ConstraintValidator
+class FuneralOrderValidator extends AbstractOrderValidator
 {
-
-    /**
-     * @var OrderValidationService
-     */
-    protected $orderValidation;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(OrderValidationService $orderValidation)
-    {
-        $this->orderValidation = $orderValidation;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function validate($object, Constraint $constraint)
     {
-        if ($object->getCategory() === OrderCategory::FUNERAL) {
-            $recipient = $object->getRecipient();
-            if (!$this->orderValidation->validateChurch($recipient)) {
-                $this->context->buildViolation($constraint->message)
-                    ->atPath('recipient')
-                    ->setParameter('{field}', 'Church')
-                    ->addViolation();
-            }
+        if ($this->isValidOrder($object) && !$this->orderValidation->validateChurch($object)) {
+            $this->context->buildViolation($constraint->message)
+                ->atPath('recipient')
+                ->addViolation();
         }
     }
 }

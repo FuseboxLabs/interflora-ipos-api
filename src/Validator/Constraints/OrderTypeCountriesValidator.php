@@ -9,28 +9,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 /**
  * Class OrderTypeCountriesValidator
  */
-class OrderTypeCountriesValidator extends ConstraintValidator
+class OrderTypeCountriesValidator extends AbstractOrderValidator
 {
-
-    /**
-     * @var OrderValidationService
-     */
-    protected $orderValidation;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(OrderValidationService $orderValidation)
-    {
-        $this->orderValidation = $orderValidation;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function validate($object, Constraint $constraint)
     {
-        if (!$this->orderValidation->validateOrderType($object)) {
+        if ($this->isValidOrder($object) && !$this->orderValidation->validateOrderType($object)) {
             $this->context->buildViolation($constraint->message)
                 ->atPath('orderType')
                 ->addViolation();

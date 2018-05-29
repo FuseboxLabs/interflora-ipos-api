@@ -9,7 +9,12 @@ use Symfony\Component\Validator\Constraint;
  */
 class ExecutingMemberCost extends Constraint
 {
-    public $message = 'Executing member cost can\' be higher than service cost.';
+    public const EXECUTING_MEMBER_COST_VIOLATION = 'Executing member cost can\'t be higher than service cost.';
+
+    /**
+     * @var string
+     */
+    public $message = self::EXECUTING_MEMBER_COST_VIOLATION;
 
     public function getTargets()
     {

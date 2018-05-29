@@ -9,7 +9,12 @@ use Symfony\Component\Validator\Constraint;
  */
 class OrderTotal extends Constraint
 {
-    public $message = 'Mismatch between order total and articles + service fee.';
+    public const ORDER_TOTAL_VIOLATION = 'Mismatch between order total and articles + service fee.';
+
+    /**
+     * @var string
+     */
+    public $message = self::ORDER_TOTAL_VIOLATION;
 
     public function getTargets()
     {
