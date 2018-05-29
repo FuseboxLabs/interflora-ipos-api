@@ -2,28 +2,13 @@
 
 namespace Interflora\IposApi\Validator\Constraints;
 
-use Interflora\IposApi\Service\OrderValidationService;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
 
 /**
  * Class OrderTypeCountriesValidator
  */
-class OrderTypeCountriesValidator extends ConstraintValidator
+class OrderTypeCountriesValidator extends IfosValidatorBase
 {
-
-    /**
-     * @var OrderValidationService
-     */
-    protected $orderValidation;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(OrderValidationService $orderValidation)
-    {
-        $this->orderValidation = $orderValidation;
-    }
 
     /**
      * {@inheritdoc}

@@ -27,7 +27,7 @@ class OrderValidationService
      */
     public function validateOrderType(Order $order): bool
     {
-        $isValid = true;
+        $isValid = false;
         if ($order->getOrderType() === OrderType::NATIONAL) {
             $isValid = ($order->getFromCountry() === $order->getToCountry());
         } elseif ($order->getOrderType() === OrderType::INTERNATIONAL) {
@@ -73,7 +73,7 @@ class OrderValidationService
      *
      * @return float
      */
-    public function getArticleTotal(Article $article): float
+    protected function getArticleTotal(Article $article): float
     {
         $total = $article->getLineTotal();
         if ($article->hasSubArticles()) {
@@ -113,9 +113,6 @@ class OrderValidationService
      */
     public function validateChurch(Recipient $recipient): bool
     {
-        if (!property_exists($recipient, 'church') || !$recipient->getChurch()) {
-            return false;
-        }
         // Validate the values of the required properties.
         if (!$recipient->getChurch()) {
             return false;
