@@ -1,6 +1,6 @@
 <?php
 
-namespace Interflora\Ipos;
+namespace Interflora\IposApi\Entity;
 
 /**
  * Class Article
@@ -463,7 +463,7 @@ class Article
      */
     public function hasSubArticles(): bool
     {
-        return $this->getSubArticles()->count() > 0;
+        return count($this->getSubArticles()) > 0;
     }
 
     /**

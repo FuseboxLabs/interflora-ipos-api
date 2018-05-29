@@ -1,143 +1,74 @@
 <?php
 
-namespace Interflora\Ipos;
+namespace Interflora\IposApi\Entity;
 
 /**
  * Class Customer
- *
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @Gedmo\Loggable
- * @ORM\Entity
- * @ApiResource(
- *   attributes={
- *     "normalization_context"={
- *       "groups"={"customer_get"}
- *     },
- *    "denormalization_context"={
- *       "groups"={"customer_set"}
- *     }
- *   }
- * )
  */
 class Customer
 {
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"customer_get"})
      */
     protected $id;
 
     /**
      * @var string
      *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"customer_get", "customer_set", "get", "set"})
+     * @Assert\NotNull()
      */
     protected $name = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"recipient_get", "recipient_set", "get", "set"})
      */
     protected $co = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"recipient_get", "recipient_set", "get", "set"})
      */
     protected $street = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"recipient_get", "recipient_set", "get", "set"})
      */
     protected $street2 = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"recipient_get", "recipient_set", "get", "set"})
      */
     protected $zip = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"recipient_get", "recipient_set", "get", "set"})
      */
     protected $city = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"customer_get", "customer_set", "get", "set"})
      */
     protected $phoneNumber = '';
 
     /**
      * @var string
      *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"customer_get", "customer_set", "get", "set"})
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
      */
     protected $mail;
 
     /**
      * @var string
      *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"customer_get", "customer_set", "get", "set"})
+     * @Assert\NotNull()
      */
     protected $type = 'b2c';
 
     /**
      * @var Debitor
-     *
-     * @Gedmo\Versioned
-     * @ORM\OneToOne(
-     *     targetEntity="App\Entity\Debitor",
-     *     cascade={"persist"},
-     *     orphanRemoval=true
-     * )
-     * @JoinColumn(
-     *     name="debitor",
-     *     referencedColumnName="id"
-     * )
-     *
-     * @Groups({"get", "set"})
      */
     protected $debitor;
 

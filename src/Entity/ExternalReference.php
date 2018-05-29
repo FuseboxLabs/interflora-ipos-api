@@ -1,64 +1,27 @@
 <?php
 
 
-namespace Interflora\Ipos;
+namespace Interflora\IposApi\Entity;
 /**
  * Class ExternalReference
- *
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @Gedmo\Loggable
- * @ORM\Entity
- * @ApiResource(
- *   attributes={
- *     "normalization_context"={
- *       "groups"={"external_reference_get"}
- *     },
- *    "denormalization_context"={
- *       "groups"={"external_reference_set"}
- *     }
- *   }
- * )
  */
 class ExternalReference
 {
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"external_reference_get"})
      */
     protected $id;
 
     /**
      * @var Order
-     *
-     * @Gedmo\Versioned
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="externalReferences")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
-     *
-     * @Groups({"external_reference_get", "external_reference_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Order",
-     *             "example"="/api/orders/1"
-     *         }
-     *     }
-     * )
      */
     protected $order;
 
     /**
      * @var string
      *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"external_reference_get", "external_reference_set"})
+     * @Assert\NotNull()
      */
     protected $service;
 
@@ -66,10 +29,7 @@ class ExternalReference
     /**
      * @var string External order id
      *
-     * @Gedmo\Versioned
-     * @ORM\Column(name="external_order_id", type="string", length=50)
-     *
-     * @Groups({"external_reference_get", "external_reference_set"})
+     * @Assert\NotNull()
      */
     protected $orderId;
 

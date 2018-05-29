@@ -1,6 +1,6 @@
 <?php
 
-namespace Interflora\Ipos;
+namespace Interflora\IposApi\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,72 +12,34 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class Debitor
- *
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @Gedmo\Loggable
- * @ORM\Entity
- * @ApiResource(
- *   attributes={
- *     "normalization_context"={
- *       "groups"={"debitor_get"}
- *     },
- *    "denormalization_context"={
- *       "groups"={"debitor_set"}
- *     }
- *   }
- * )
  */
 class Debitor
 {
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"debitor_get"})
      */
     protected $id;
 
     /**
      * @var string
      *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=4, nullable=false)
-     *
-     * @Groups({"debitor_get", "debitor_set", "get", "set"})
+     * @Assert\NotNull()
      */
     protected $type = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"debitor_get", "debitor_set", "get", "set"})
      */
     protected $ean = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"recipient_get", "recipient_set", "get", "set"})
      */
     protected $cvr = '';
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"recipient_get", "recipient_set", "get", "set"})
      */
     protected $debitorNumber = '';
 

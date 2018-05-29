@@ -1,22 +1,11 @@
 <?php
 
-namespace Interflora\Ipos;
+namespace Interflora\IposApi\Entity;
+
+use Interflora\IposApi\Constant\PaymentStatus;
+
 /**
  * Class Payment
- *
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @Gedmo\Loggable
- * @ORM\Entity
- * @ApiResource(
- *   attributes={
- *     "normalization_context"={
- *       "groups"={"payment_get"}
- *     },
- *    "denormalization_context"={
- *       "groups"={"payment_set"}
- *     }
- *   }
- * )
  */
 class Payment
 {
@@ -32,91 +21,44 @@ class Payment
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"payment_get"})
      */
     protected $id;
 
     /**
      * @var string
      *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=20)
-     *
-     * @Groups({"get", "set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="string",
-     *             "enum"={Payment::PAYMENT_CAPTURE_STATUS},
-     *             "example"=PaymentStatus::NEW
-     *         }
-     *     }
-     * )
+     * @Assert\NotNull()
      */
     protected $status = PaymentStatus::NEW;
 
     /**
      * @var string
      *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"payment_get", "payment_set"})
+     * @Assert\NotNull()
      */
     protected $method;
 
     /**
      * @var string
      *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=50, nullable=false)
-     *
-     * @Groups({"payment_get", "payment_set"})
+     * @Assert\NotNull()
      */
     protected $transactionId;
 
     /**
      * @var float
      *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="float", precision=2)
-     *
-     * @Groups({"payment_get", "payment_set", "get", "set"})
+     * @Assert\NotNull()
      */
     protected $price;
 
     /**
      * @var Order
-     *
-     * @Gedmo\Versioned
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="payments")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
-     *
-     *
-     * @Groups({"payment_get", "payment_set"})
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "type"="Order",
-     *             "example"="/api/orders/1"
-     *         }
-     *     }
-     * )
      */
     protected $order;
 
     /**
      * @var string
-     *
-     * @Gedmo\Versioned
-     * @ORM\Column(type="json")
-     *
-     * @Groups({"payment_get", "payment_set"})
      */
     protected $data;
 
