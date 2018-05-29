@@ -7,15 +7,14 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Class OrderTypeCountriesValidator
  */
-class OrderTypeCountriesValidator extends IfosValidatorBase
+class OrderTypeCountriesValidator extends AbstractOrderValidator
 {
-
     /**
      * {@inheritdoc}
      */
     public function validate($object, Constraint $constraint)
     {
-        if (!$this->orderValidation->validateOrderType($object)) {
+        if ($this->isValidOrder($object) && !$this->orderValidation->validateOrderType($object)) {
             $this->context->buildViolation($constraint->message)
                 ->atPath('orderType')
                 ->addViolation();

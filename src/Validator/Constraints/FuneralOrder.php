@@ -9,7 +9,12 @@ use Symfony\Component\Validator\Constraint;
  */
 class FuneralOrder extends Constraint
 {
-    public $message = 'Field: {field} missing from funeral order.';
+    public const FUNERAL_ORDER_VIOLATION = 'Field: Church missing from funeral order.';
+
+    /**
+     * @var string
+     */
+    public $message = self::FUNERAL_ORDER_VIOLATION;
 
     public function getTargets()
     {

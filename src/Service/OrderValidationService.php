@@ -2,10 +2,10 @@
 
 namespace Interflora\IposApi\Service;
 
+use Interflora\IposApi\Constant\OrderCategory;
+use Interflora\IposApi\Constant\OrderType;
 use Interflora\IposApi\Entity\Article;
 use Interflora\IposApi\Entity\Order;
-use Interflora\IposApi\Constant\OrderType;
-use Interflora\IposApi\Entity\Recipient;
 
 /**
  * Class OrderValidationService
@@ -65,6 +65,7 @@ class OrderValidationService
         }
 
         $calculatedTotal += $order->getServiceCost();
+
         return ($orderTotal === $calculatedTotal);
     }
 
@@ -103,22 +104,24 @@ class OrderValidationService
         $subArticleSum = array_sum(array_map(function ($subArticle) {
             return $subArticle->getLineTotal();
         }, $subArticles));
+
         return ($bundlePrice === $subArticleSum);
     }
 
     /**
-     * @param Recipient $recipient
+     * @param Order $order
      *
      * @return bool
      */
-    public function validateChurch(Recipient $recipient): bool
+    public function validateChurch(Order $order): bool
     {
-        // Validate the values of the required properties.
-        if (!$recipient->getChurch()) {
-            return false;
+        $isValid = true;
+        if ($order->getCategory() === OrderCategory::FUNERAL) {
+            $recipient = $order->getRecipient();
+            $isValid   = !empty($recipient->getChurch());
         }
 
-        return true;
+        return $isValid;
     }
 
 }
