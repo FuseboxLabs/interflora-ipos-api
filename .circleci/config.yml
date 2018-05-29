@@ -1,0 +1,52 @@
+---
+version: 2
+jobs:
+  unit-tests:
+    docker:
+      - image: adaptdk/php:7.2-apache-node-with-extensions
+        environment:
+          - CC_TEST_REPORTER_ID=01b5933f8a9eeed52bd7470d5d2c49a6163025723d8e3e8dc40799d739ebd2fa
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.json" }}
+            - composer-v1-
+      - run: composer install
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
+          name: Run tests
+          command: |
+            ./cc-test-reporter before-build
+            sudo vendor/bin/phpunit --verbose --debug --coverage-clover clover.xml
+            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+  tag-list:
+    docker:
+      - image: adaptdk/php:7.2-apache-node-with-extensions
+    steps:
+      - checkout
+      - run:
+          name: Show available tags
+          command: git tag
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - unit-tests
+      - tag-list:
+          requires:
+            - unit-tests
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /^v.*/
