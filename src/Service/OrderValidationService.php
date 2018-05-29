@@ -27,7 +27,7 @@ class OrderValidationService
      */
     public function validateOrderType(Order $order): bool
     {
-        $isValid = true;
+        $isValid = false;
         if ($order->getOrderType() === OrderType::NATIONAL) {
             $isValid = ($order->getFromCountry() === $order->getToCountry());
         } elseif ($order->getOrderType() === OrderType::INTERNATIONAL) {
@@ -74,7 +74,7 @@ class OrderValidationService
      *
      * @return float
      */
-    public function getArticleTotal(Article $article): float
+    protected function getArticleTotal(Article $article): float
     {
         $total = $article->getLineTotal();
         if ($article->hasSubArticles()) {

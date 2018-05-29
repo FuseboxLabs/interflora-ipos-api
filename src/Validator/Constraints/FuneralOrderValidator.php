@@ -2,10 +2,7 @@
 
 namespace Interflora\IposApi\Validator\Constraints;
 
-use Interflora\IposApi\Constant\OrderCategory;
-use Interflora\IposApi\Service\OrderValidationService;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
 
 /**
  * Class OrderTotalValidator

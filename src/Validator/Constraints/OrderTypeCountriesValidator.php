@@ -2,9 +2,7 @@
 
 namespace Interflora\IposApi\Validator\Constraints;
 
-use Interflora\IposApi\Service\OrderValidationService;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
 
 /**
  * Class OrderTypeCountriesValidator
