@@ -238,12 +238,12 @@ class Order
     /**
      * @var float
      */
-    protected $flowerTotal;
+    protected $flowerTotal = 0;
 
     /**
      * @var float
      */
-    protected $netAmountTotal;
+    protected $netAmountTotal = 0;
 
     /**
      * @var float

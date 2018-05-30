@@ -2,6 +2,9 @@
 
 
 namespace Interflora\IposApi\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Class ExternalReference
  */
