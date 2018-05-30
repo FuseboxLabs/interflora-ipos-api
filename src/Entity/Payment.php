@@ -3,6 +3,7 @@
 namespace Interflora\IposApi\Entity;
 
 use Interflora\IposApi\Constant\PaymentStatus;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Payment
@@ -125,17 +126,17 @@ class Payment
     /**
      * @return string
      */
-    public function getTransaction(): string
+    public function getTransactionId(): string
     {
         return $this->transactionId;
     }
 
     /**
-     * @param string $recipient
+     * @param string $transactionId
      *
      * @return Payment
      */
-    public function setTransaction(string $transactionId): Payment
+    public function setTransactionId(string $transactionId): Payment
     {
         $this->transactionId = $transactionId;
 
