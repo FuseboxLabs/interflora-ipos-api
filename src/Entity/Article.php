@@ -2,6 +2,7 @@
 
 namespace Interflora\IposApi\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -85,7 +86,9 @@ class Article
     protected $vatRate;
 
     /**
-     * @var array An array of articles.
+     * An array of articles.
+     *
+     * @var Article[]|ArrayCollection
      */
     protected $subArticles = [];
 
