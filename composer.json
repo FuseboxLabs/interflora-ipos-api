@@ -23,7 +23,7 @@
   "require": {
     "php": ">=7.1",
     "guzzlehttp/guzzle": "^6.2",
-    "symfony/validator": "^4.0"
+    "symfony/validator": ">=3.4"
   },
   "autoload": {
     "psr-4" : {
