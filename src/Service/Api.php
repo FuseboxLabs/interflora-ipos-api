@@ -3,6 +3,7 @@
 namespace Interflora\IposApi\Service;
 
 use GuzzleHttp\Client;
+use Interflora\IposApi\Constant\ApiPath;
 
 /**
  * Class Api.
