@@ -171,7 +171,7 @@ class Order
     /**
      * @var \DateTime
      *
-     * @Assert\DateTime()
+     * @Assert\Date()
      */
     protected $funeralTime;
 
