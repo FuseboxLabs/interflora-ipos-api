@@ -164,7 +164,7 @@ class Order
     /**
      * @var \DateTime
      *
-     * @Assert\DateTime()
+     * @Assert\Date()
      * @Assert\GreaterThanOrEqual("midnight")
      */
     protected $deliveryDate;
@@ -172,7 +172,7 @@ class Order
     /**
      * @var \DateTime
      *
-     * @Assert\Date()
+     * @Assert\DateTime()
      */
     protected $funeralTime;
 
