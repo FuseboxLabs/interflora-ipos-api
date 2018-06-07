@@ -165,6 +165,7 @@ class Order
      * @var \DateTime
      *
      * @Assert\DateTime()
+     * @Assert\GreaterThanOrEqual("midnight")
      */
     protected $deliveryDate;
 
