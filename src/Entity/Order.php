@@ -271,9 +271,6 @@ class Order
 
     /**
      * @var integer
-     *
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
      */
     protected $executingMember;
 
