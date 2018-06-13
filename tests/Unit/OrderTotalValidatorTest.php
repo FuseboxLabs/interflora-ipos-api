@@ -2,6 +2,7 @@
 
 namespace Interflora\IposApi\Tests\Unit;
 
+use Interflora\IposApi\Constant\OrderType;
 use Interflora\IposApi\Entity\Article;
 use Interflora\IposApi\Entity\Order;
 use Interflora\IposApi\Validator\Constraints\AbstractOrderValidator;
@@ -42,20 +43,23 @@ class OrderTotalValidatorTest extends AbstractValidatorTest
         $orderArticlesMatchServiceDecimal    = $orderTotal(300.51, 70.51, [200, 30]);
         $orderArticlesMismatchServiceDecimal = $orderTotal(300.24, 70.51, [200, 30]);
         $orderArticlesMismatchArticleDecimal = $orderTotal(300.24, 70, [200.67, 30]);
+        $orderArticlesMismatchInternational  = $orderTotal(300.24, 70, [200.67, 30]);
+        $orderArticlesMismatchInternational->setOrderType(OrderType::INTERNATIONAL);
 
         $violation           = OrderTotal::ORDER_TOTAL_VIOLATION;
         $notAnOrderViolation = AbstractOrderValidator::ORDER_VIOLATION;
 
         return [
-            'Total matches service cost seventy'               => [$orderArticlesMatchServiceSeventy],
-            'Total matches service cost zero'                  => [$orderArticlesMatchServiceZero],
-            'Total smaller than calculated'                    => [$orderArticlesNoMatchGreater, $violation],
-            'Total greater than calculated'                    => [$orderArticlesNoMatchSmaller, $violation],
-            'Total matches calculated with article decimal'    => [$orderArticlesMatchArticleDecimal],
-            'Total matches calculated with service decimal'    => [$orderArticlesMatchServiceDecimal],
-            'Total mismatches calculated with service decimal' => [$orderArticlesMismatchServiceDecimal, $violation],
-            'Total mismatches calculated with article decimal' => [$orderArticlesMismatchArticleDecimal, $violation],
-            'Not an order violation'                           => [null, $notAnOrderViolation],
+            'Total matches service cost seventy'                  => [$orderArticlesMatchServiceSeventy],
+            'Total matches service cost zero'                     => [$orderArticlesMatchServiceZero],
+            'Total smaller than calculated'                       => [$orderArticlesNoMatchGreater, $violation],
+            'Total greater than calculated'                       => [$orderArticlesNoMatchSmaller, $violation],
+            'Total matches calculated with article decimal'       => [$orderArticlesMatchArticleDecimal],
+            'Total matches calculated with service decimal'       => [$orderArticlesMatchServiceDecimal],
+            'Total mismatches calculated with service decimal'    => [$orderArticlesMismatchServiceDecimal, $violation],
+            'Total mismatches calculated with article decimal'    => [$orderArticlesMismatchArticleDecimal, $violation],
+            'Total mismatches calculated for international order' => [$orderArticlesMismatchInternational],
+            'Not an order violation'                              => [null, $notAnOrderViolation],
         ];
 
     }

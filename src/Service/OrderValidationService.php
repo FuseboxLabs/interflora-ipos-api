@@ -57,6 +57,10 @@ class OrderValidationService
      */
     public function validateOrderTotal(Order $order): bool
     {
+        if ($order->getOrderType() === OrderType::INTERNATIONAL) {
+            return true;
+        }
+
         $orderTotal      = $order->getOrderTotal();
         $articles        = $order->getArticles();
         $calculatedTotal = 0;
