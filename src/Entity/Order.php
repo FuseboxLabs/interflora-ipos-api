@@ -270,7 +270,7 @@ class Order
     protected $currency;
 
     /**
-     * @var integer
+     * @var integer|null
      */
     protected $executingMember;
 
