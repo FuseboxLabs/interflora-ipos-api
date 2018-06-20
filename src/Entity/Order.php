@@ -1233,6 +1233,8 @@ class Order
     public function setUnitId(string $unitId): void
     {
         $this->unitId = $unitId;
+
+        return $this;
     }
 
 }
