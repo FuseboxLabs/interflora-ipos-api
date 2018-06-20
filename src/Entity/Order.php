@@ -1230,7 +1230,7 @@ class Order
     /**
      * @param string $unitId
      */
-    public function setUnitId(string $unitId): void
+    public function setUnitId(string $unitId): Order
     {
         $this->unitId = $unitId;
 
