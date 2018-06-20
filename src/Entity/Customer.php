@@ -217,7 +217,7 @@ class Customer
     /**
      * @return string
      */
-    public function getPhone(): string
+    public function getPhoneNumber(): string
     {
         return $this->phoneNumber;
     }
@@ -227,7 +227,7 @@ class Customer
      *
      * @return Customer
      */
-    public function setPhone(string $phone): Customer
+    public function setPhoneNumber(string $phone): Customer
     {
         $this->phoneNumber = $phone;
 

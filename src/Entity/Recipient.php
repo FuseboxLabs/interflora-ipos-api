@@ -243,7 +243,7 @@ class Recipient
     /**
      * @return string
      */
-    public function getPhone(): string
+    public function getPhoneNumber(): string
     {
         return $this->phoneNumber;
     }
@@ -253,7 +253,7 @@ class Recipient
      *
      * @return Recipient
      */
-    public function setPhone(string $phone): Recipient
+    public function setPhoneNumber(string $phone): Recipient
     {
         $this->phoneNumber = $phone;
 

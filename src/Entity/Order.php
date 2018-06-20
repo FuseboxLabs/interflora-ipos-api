@@ -79,6 +79,8 @@ class Order
     public const ORDER_PREFIX_MAP = [
         55 => 'interflora.dk',
         11 => 'posy',
+        22 => 'ifos',
+        99 => 'floristgate'
     ];
 
     /**
@@ -339,6 +341,12 @@ class Order
      * @var string
      */
     protected $data = '';
+
+
+    /**
+     * @var string
+     */
+    protected $unitId = '';
 
     /**
      * Order constructor.
@@ -1207,6 +1215,24 @@ class Order
     public function setData(string $data): Order
     {
         $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnitId(): string
+    {
+        return $this->unitId;
+    }
+
+    /**
+     * @param string $unitId
+     */
+    public function setUnitId(string $unitId): Order
+    {
+        $this->unitId = $unitId;
 
         return $this;
     }
