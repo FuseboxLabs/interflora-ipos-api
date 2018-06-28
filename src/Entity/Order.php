@@ -313,6 +313,11 @@ class Order
     protected $print = '';
 
     /**
+     * @var bool
+     */
+    protected $isReprint = false;
+
+    /**
      * @var \DateTime
      */
     protected $createdAt;
@@ -1233,6 +1238,26 @@ class Order
     public function setUnitId(string $unitId): Order
     {
         $this->unitId = $unitId;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReprint(): bool
+    {
+        return $this->isReprint;
+    }
+
+    /**
+     * @param bool $isReprint
+     *
+     * @return $this
+     */
+    public function setIsReprint(bool $isReprint): self
+    {
+        $this->isReprint = $isReprint;
 
         return $this;
     }
