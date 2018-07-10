@@ -1,6 +1,7 @@
 <?php
 namespace Interflora\IposApi\Entity;
 
+use App\Entity\Voucher;
 use Doctrine\Common\Collections\ArrayCollection;
 use Interflora\IposApi\Constant\OrderCategory;
 use Interflora\IposApi\Constant\OrderStatus;
@@ -352,6 +353,14 @@ class Order
      * @var string
      */
     protected $unitId = '';
+
+    /**
+     * @var Voucher
+     *
+     * @Assert\NotBlank()
+     * @Assert\Collection()
+     */
+    protected $voucher;
 
     /**
      * Order constructor.
@@ -1258,6 +1267,26 @@ class Order
     public function setIsReprint(bool $isReprint): self
     {
         $this->isReprint = $isReprint;
+
+        return $this;
+    }
+
+    /**
+     * @return Voucher
+     */
+    public function getVoucher():? Voucher
+    {
+        return $this->voucher;
+    }
+
+    /**
+     * @param Voucher $voucher
+     *
+     * @return $this
+     */
+    public function setVoucher(Voucher $voucher = null): self
+    {
+        $this->voucher = $voucher;
 
         return $this;
     }
