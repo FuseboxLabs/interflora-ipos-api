@@ -1,11 +1,11 @@
 <?php
 namespace Interflora\IposApi\Entity;
 
-use App\Entity\Voucher;
 use Doctrine\Common\Collections\ArrayCollection;
 use Interflora\IposApi\Constant\OrderCategory;
 use Interflora\IposApi\Constant\OrderStatus;
 use Interflora\IposApi\Constant\OrderType;
+use Interflora\IposApi\Entity\Voucher;
 use Symfony\Component\Validator\Constraints as Assert;
 use Interflora\IposApi\Validator\Constraints as InterfloraAssert;
 
