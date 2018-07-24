@@ -1,7 +1,9 @@
 <?php
 
 namespace Interflora\IposApi\Entity;
+
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Class Recipient
  */
@@ -43,11 +45,11 @@ class Recipient
      */
     protected $street2;
 
-  /**
+    /**
      * @var string
-   *
-   * @Assert\NotNull()
-   * @Assert\NotBlank()
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     protected $zip;
 
@@ -79,6 +81,11 @@ class Recipient
      * @Assert\NotNull()
      */
     protected $deliveryLocation;
+
+    /**
+     * @var string
+     */
+    protected $addressId;
 
     /**
      * @return int
@@ -280,4 +287,23 @@ class Recipient
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getAddressId(): string
+    {
+        return $this->addressId;
+    }
+
+    /**
+     * @param string $addressId
+     *
+     * @return Recipient
+     */
+    public function setAddressId(string $addressId): Recipient
+    {
+        $this->addressId = $addressId;
+
+        return $this;
+    }
 }
