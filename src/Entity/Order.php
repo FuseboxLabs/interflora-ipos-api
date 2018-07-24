@@ -3,6 +3,7 @@ namespace Interflora\IposApi\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Interflora\IposApi\Constant\OrderCategory;
+use Interflora\IposApi\Constant\OrderDeliveryStatus;
 use Interflora\IposApi\Constant\OrderStatus;
 use Interflora\IposApi\Constant\OrderType;
 use Interflora\IposApi\Entity\Voucher;
@@ -30,6 +31,9 @@ class Order
         OrderStatus::DELIVERED,
         OrderStatus::CANCELED,
         OrderStatus::COMPLETED,
+        OrderStatus::PAID,
+        OrderStatus::PAYMENT_FAILED,
+        OrderStatus::SYNC_ERROR,
     ];
 
     /**
@@ -41,6 +45,7 @@ class Order
         OrderStatus::OUTGOING,
         OrderStatus::SENT,
         OrderStatus::COMPLETED,
+        OrderStatus::SYNC_ERROR,
     ];
 
     /**
@@ -50,8 +55,8 @@ class Order
         OrderStatus::NEW,
         OrderStatus::NOT_PRINTED,
         OrderStatus::PRINTED,
+        OrderDeliveryStatus::NOT_DELIVERED
     ];
-
 
     /**
      * Statuses of order that is considered as delivered
@@ -59,12 +64,50 @@ class Order
     public const ORDER_STATUSES_DELIVERED = [
         OrderStatus::DELIVERED,
         OrderStatus::COMPLETED,
+        OrderDeliveryStatus::DELIVERED_AT_CHURCH,
+        OrderDeliveryStatus::DELIVERED_AT_DOOR,
+        OrderDeliveryStatus::DELIVERED_PERSONAL,
+        OrderDeliveryStatus::TAKEN_BACK
     ];
 
     /**
      * All order statuses
      */
     public const ORDER_STATUSES = self::INTERNATIONAL_ORDER_STATUSES + self::NATIONAL_ORDER_STATUSES;
+
+    /**
+     * If an order is in one of the states below, disallow delivery transitions
+     */
+    public const DISALLOW_DELIVERY_STATUS_UPDATE_STATUSES = [
+        OrderStatus::SYNC_ERROR,
+        OrderStatus::CANCELED,
+        OrderStatus::COMPLETED
+    ];
+
+    /**
+     * Statuses and transitions which will trigger publishing to a queue with the status' or transitions name
+     * Before adding any new statuses to this array, you need to define a queue service
+     */
+    public const PUBLISH_TO_QUEUE_STATUSES = [
+        OrderStatus::NOT_PRINTED,
+        OrderStatus::DELIVERED,
+        OrderStatus::PAID,
+        OrderStatus::COMPLETED,
+        OrderStatus::PENDING_APPROVAL,
+        OrderStatus::OUTGOING,
+        OrderStatus::SENT,
+        OrderStatus::CANCELED,
+    ];
+
+    public const PUBLISH_TO_QUEUE_TRANSITIONS = [
+        'reprint_order',
+        'reprint_card'
+    ];
+
+    public const PAYMENT_STATUSES = [
+        OrderStatus::DELIVERED,
+        OrderStatus::PRINTED,
+    ];
 
     /**
      * Order types
@@ -355,9 +398,8 @@ class Order
     protected $unitId = '';
 
     /**
-     * @var Voucher
+     * @var Voucher|null
      *
-     * @Assert\NotBlank()
      * @Assert\Collection()
      */
     protected $voucher;
@@ -733,10 +775,6 @@ class Order
     public function setExternalReferences(array $externalReferences): Order
     {
         $this->externalReferences = $externalReferences;
-
-        foreach ($this->getExternalReferences() as $externalReference) {
-            $externalReference->setOrder($this);
-        }
 
         return $this;
     }
