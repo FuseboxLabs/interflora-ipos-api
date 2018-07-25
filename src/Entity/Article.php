@@ -76,7 +76,7 @@ class Article
     protected $picturePath = '';
 
     /**
-     * @var array Array of strings.
+     * @var array|null Array of strings.
      */
     protected $ribbons;
 
@@ -406,7 +406,7 @@ class Article
     }
 
     /**
-     * @param array $ribbons
+     * @param string[]|ArrayCollection $ribbons
      *
      * @return Article
      */
