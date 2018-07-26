@@ -288,9 +288,9 @@ class Recipient
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAddressId(): string
+    public function getAddressId(): ?string
     {
         return $this->addressId;
     }
