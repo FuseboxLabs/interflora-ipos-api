@@ -277,17 +277,17 @@ class Customer
     /**
      * @return Debitor
      */
-    public function getDebitor(): Debitor
+    public function getDebitor(): ?Debitor
     {
       return $this->debitor;
     }
 
     /**
-     * @param string $debitor
+     * @param Debitor|null $debitor
      *
      * @return Customer
      */
-    public function setDebitor(Debitor $debitor): Customer
+    public function setDebitor(Debitor $debitor = null): Customer
     {
       $this->debitor = $debitor;
 
