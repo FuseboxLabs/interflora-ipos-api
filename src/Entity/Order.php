@@ -1312,7 +1312,7 @@ class Order
     /**
      * @return Voucher
      */
-    public function getVoucher():? Voucher
+    public function getVoucher(): ?Voucher
     {
         return $this->voucher;
     }
