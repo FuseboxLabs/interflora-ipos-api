@@ -398,8 +398,6 @@ class Order
 
     /**
      * @var Voucher|null
-     *
-     * @Assert\Collection()
      */
     protected $voucher;
 
@@ -408,9 +406,7 @@ class Order
      */
     public function __construct()
     {
-        $this->externalReferences = new ArrayCollection();
-        $this->payments = new ArrayCollection();
-        $this->articles = new ArrayCollection();
+        
     }
 
     /**
