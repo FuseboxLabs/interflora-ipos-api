@@ -6,7 +6,6 @@ use Interflora\IposApi\Constant\OrderCategory;
 use Interflora\IposApi\Constant\OrderDeliveryStatus;
 use Interflora\IposApi\Constant\OrderStatus;
 use Interflora\IposApi\Constant\OrderType;
-use Interflora\IposApi\Entity\Voucher;
 use Symfony\Component\Validator\Constraints as Assert;
 use Interflora\IposApi\Validator\Constraints as InterfloraAssert;
 
@@ -409,9 +408,9 @@ class Order
      */
     public function __construct()
     {
-        $this->externalReferences = [];
-        $this->payments = [];
-        $this->articles = [];
+        $this->externalReferences = new ArrayCollection();
+        $this->payments = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     /**
@@ -772,7 +771,7 @@ class Order
      *
      * @return Order
      */
-    public function setExternalReferences(array $externalReferences): Order
+    public function setExternalReferences($externalReferences): Order
     {
         $this->externalReferences = $externalReferences;
 
@@ -1119,11 +1118,6 @@ class Order
     public function setArticles($articles): Order
     {
         $this->articles = $articles;
-
-        foreach ($this->getArticles() as $article) {
-            $article->setOrder($this);
-        }
-
         return $this;
     }
 
@@ -1140,14 +1134,9 @@ class Order
      *
      * @return Order
      */
-    public function setPayments(array $payments): Order
+    public function setPayments($payments): Order
     {
         $this->payments = $payments;
-
-        foreach ($this->getPayments() as $payment) {
-            $payment->setOrder($this);
-        }
-
         return $this;
     }
 

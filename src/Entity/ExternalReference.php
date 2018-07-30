@@ -1,8 +1,15 @@
 <?php
 
-
 namespace Interflora\IposApi\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -37,9 +44,25 @@ class ExternalReference
     protected $orderId;
 
     /**
+     * ExternalReference constructor.
+     *
+     * @param string $service
+     *   The service key.
+     * @param string $orderId
+     *   The order id related to the key.
+     */
+    public function __construct(string $service = '', string $orderId = '')
+    {
+        $this
+            ->setService($service)
+            ->setOrderId($orderId);
+    }
+
+
+    /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ? int
     {
         return $this->id;
     }
