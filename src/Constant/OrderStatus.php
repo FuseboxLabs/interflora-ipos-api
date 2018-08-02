@@ -78,4 +78,10 @@ class OrderStatus
      */
     public const SENT = 'sent';
 
+    /**
+     * International order status error from florist gate
+     */
+    public const FAILED = 'failed';
+
+
 }
