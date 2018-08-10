@@ -6,6 +6,7 @@ use Interflora\IposApi\Constant\OrderCategory;
 use Interflora\IposApi\Constant\OrderType;
 use Interflora\IposApi\Entity\Article;
 use Interflora\IposApi\Entity\Order;
+use Interflora\IposApi\Entity\Voucher;
 
 /**
  * Class OrderValidationService
@@ -65,6 +66,10 @@ class OrderValidationService
         }
 
         $calculatedTotal += $order->getServiceCost();
+
+        if ($order->getVoucher() instanceof Voucher) {
+            $calculatedTotal -= $order->getVoucher()->getDiscountAmount();
+        }
 
         return ($orderTotal === $calculatedTotal);
     }
