@@ -22,4 +22,9 @@ class PaymentStatus {
      */
     public const ERROR = 'error';
 
+    /**
+     * Payment canceled (released)
+     */
+    public const CANCELED = 'canceled';
+
 }
